@@ -1,40 +1,33 @@
 package com.robo.store_shopkeeper;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.apache.http.Header;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.robo.store_shopkeeper.http.TextHttpResponseHandler;
-import com.robo.store_shopkeeper.adapter.MainTabViewPagerAdapter;
 import com.robo.store_shopkeeper.http.HttpParameter;
 import com.robo.store_shopkeeper.http.RoboHttpClient;
+import com.robo.store_shopkeeper.http.TextHttpResponseHandler;
+import com.robo.store_shopkeeper.util.KeyUtil;
 import com.robo.store_shopkeeper.util.LogUtil;
 import com.robo.store_shopkeeper.util.LoginUtil;
 import com.robo.store_shopkeeper.util.SPUtil;
-import com.robo.store_shopkeeper.util.TabsUtil;
 import com.robo.store_shopkeeper.util.ToastUtil;
 
-public class MainActivity extends ActionBarActivity implements OnPageChangeListener {
+public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 
-	private LinearLayout tabs;
-	private String currentTabId;
-	private View currentView;
+	private FrameLayout user_cover,more_cover;
+	private FrameLayout goods_ruku_cover,cash_checkout_cover,goods_management_cover;
+	private FrameLayout deal_management_cover,bill_management_cover,business_remainder_cover;
+	private FrameLayout shop_management_cover,fault_repair_cover;
 	private long exitTime = 0;
-	private static ViewPager viewPager;
-	private List<Fragment> fragmentList;
 	private SharedPreferences mSharedPreferences;
 	
 	@Override
@@ -48,38 +41,36 @@ public class MainActivity extends ActionBarActivity implements OnPageChangeListe
 	
 	private void init(){
 		mSharedPreferences = SPUtil.getSharedPreferences(this);
-		fragmentList = new ArrayList<Fragment>();
-		fragmentList.add(new HomeFragment());
-		fragmentList.add(new ShopFragment());
-		fragmentList.add(new CartFragment());
-		fragmentList.add(new UserFragment());
-//		tabs = (LinearLayout) findViewById(R.id.tabs);
-//		viewPager = (ViewPager) findViewById(R.id.itemViewPager);
-//		viewPager.setOffscreenPageLimit(4);
-//		
-//		TabsUtil.initTab(this, tabs, viewPager, titles, selecters);
-				
-		viewPager.setOnPageChangeListener(this);
-		viewPager.setAdapter(new MainTabViewPagerAdapter(getSupportFragmentManager(), fragmentList));
+		user_cover = (FrameLayout) findViewById(R.id.user_cover);
+		more_cover = (FrameLayout) findViewById(R.id.more_cover);
+		
+		goods_ruku_cover = (FrameLayout) findViewById(R.id.goods_ruku_cover);
+		cash_checkout_cover = (FrameLayout) findViewById(R.id.cash_checkout_cover);
+		goods_management_cover = (FrameLayout) findViewById(R.id.goods_management_cover);
+		
+		deal_management_cover = (FrameLayout) findViewById(R.id.deal_management_cover);
+		bill_management_cover = (FrameLayout) findViewById(R.id.bill_management_cover);
+		business_remainder_cover = (FrameLayout) findViewById(R.id.business_remainder_cover);
+		
+		shop_management_cover = (FrameLayout) findViewById(R.id.shop_management_cover);
+		fault_repair_cover = (FrameLayout) findViewById(R.id.fault_repair_cover);
+		
+		
+		user_cover.setOnClickListener(this);
+		more_cover.setOnClickListener(this);
+		
+		goods_ruku_cover.setOnClickListener(this);
+		cash_checkout_cover.setOnClickListener(this);
+		goods_management_cover.setOnClickListener(this);
+		
+		deal_management_cover.setOnClickListener(this);
+		bill_management_cover.setOnClickListener(this);
+		business_remainder_cover.setOnClickListener(this);
+		
+		shop_management_cover.setOnClickListener(this);
+		fault_repair_cover.setOnClickListener(this);
 	}
 	
-	@Override
-	public void onPageSelected(int arg0) {
-		TabsUtil.setCurrentTab(tabs, arg0);
-	}
-	
-	@Override
-	public void onPageScrollStateChanged(int arg0) {
-	}
-
-	@Override
-	public void onPageScrolled(int arg0, float arg1, int arg2) {
-	}
-	
-	public static void setCurrentTab(int index){
-		viewPager.setCurrentItem(index);
-	}
-
 	@Override
 	public void onBackPressed() {
     	if ((System.currentTimeMillis() - exitTime) > 2000) {
@@ -94,12 +85,6 @@ public class MainActivity extends ActionBarActivity implements OnPageChangeListe
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		LogUtil.DefalutLog("MainActivity---onActivityResult");
-		if(HomeFragment.RequestCity == requestCode){
-			HomeFragment.mBaseFragment.onActivityResult(requestCode, resultCode, data);
-		}
-		if(UserFragment.requestLoginCode == requestCode){
-			UserFragment.mUserFragment.onActivityResult(requestCode, resultCode, data);
-		}
 	}
 	
 	private void RequestData(){
@@ -129,25 +114,39 @@ public class MainActivity extends ActionBarActivity implements OnPageChangeListe
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if(viewPager != null){
-			viewPager = null;
-		}
 		LoginUtil.isUpdate = false;
 	}
+
+	@Override
+	public void onClick(View v) {
+		switch(v.getId()){
+		case R.id.user_cover:
+			break;
+		case R.id.more_cover:
+			break;
+		case R.id.cash_checkout_cover:
+			break;
+		case R.id.goods_management_cover:
+			break;
+		case R.id.deal_management_cover:
+			break;
+		case R.id.bill_management_cover:
+			break;
+		case R.id.business_remainder_cover:
+			break;
+		case R.id.shop_management_cover:
+			break;
+		case R.id.fault_repair_cover:
+			break;
+		}
+	}
 	
-	
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		getMenuInflater().inflate(R.menu.main, menu);
-//		return true;
-//	}
-//	
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
-//		int id = item.getItemId();
-//		if (id == R.id.action_settings) {
-//			return true;
-//		}
-//		return super.onOptionsItemSelected(item);
-//	}
+	protected void toActivity(Class mClass,Bundle bundle){
+		Intent intent = new Intent(this,mClass);
+		if(bundle != null){
+			intent.putExtra(KeyUtil.BundleKey, bundle);
+		}
+		startActivity(intent);
+	}
+
 }

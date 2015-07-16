@@ -125,7 +125,6 @@ public class CartFragment extends BaseFragment implements OnClickListener{
 			CartUtil.setTotalSum(total_tv);
 			break;
 		case R.id.message_layout:
-			MainActivity.setCurrentTab(0);
 			break;
 		case R.id.btn_to_balance_or_delete:
 			toBalanceOrDelete();

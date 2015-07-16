@@ -1,15 +1,324 @@
-<LinearLayout 
+  <LinearLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical" >
+    
+    <RelativeLayout
+        android:id="@+id/my_awesome_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_bar"
+        android:background="@drawable/top_bg"
+        android:paddingLeft="0dp" >
+
+        <FrameLayout
+            android:id="@+id/user_cover"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:foreground="@drawable/framelayout_selector"
+            android:paddingLeft="@dimen/padding_20"
+            android:paddingRight="@dimen/padding_20" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/user" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="服务运营商名字"
+            android:textColor="@color/white"
+            android:textSize="@dimen/bigger" />
+
+        <FrameLayout
+            android:id="@+id/more_cover"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:foreground="@drawable/framelayout_selector"
+            android:paddingLeft="@dimen/padding_15"
+            android:paddingRight="@dimen/padding_15" >
+
+            <ImageView
+                android:id="@+id/more_btn"
+                android:layout_width="22dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/more" />
+        </FrameLayout>
+    </RelativeLayout>  
+      
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_weight="3"
         >
-        
+        <FrameLayout 
+            android:id="@+id/goods_ruku_cover"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+	        android:paddingTop="@dimen/padding_20"
+	        android:paddingBottom="@dimen/padding_15"
+            android:foreground="@drawable/framelayout_selector"
+            >
+	        <LinearLayout 
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:gravity="center"
+	                android:orientation="vertical"
+	                >
+		            <ImageView
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:src="@drawable/icon_shop_ruku"
+		                />
+		            <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="商品入库"
+	                    android:layout_marginTop="@dimen/padding_5"
+	                    android:textColor="@color/text_black"
+	                    android:textSize="@dimen/big" />
+	            </LinearLayout>
+        </FrameLayout>
+        <FrameLayout 
+            android:id="@+id/cash_checkout_cover"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+	        android:paddingTop="@dimen/padding_20"
+	        android:paddingBottom="@dimen/padding_15"
+            android:foreground="@drawable/framelayout_selector"
+            >
+	        <LinearLayout 
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:gravity="center"
+	                android:orientation="vertical"
+	                >
+		            <ImageView
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:src="@drawable/icon_cash_checkout"
+		                />
+		            <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="现金结账"
+	                    android:layout_marginTop="@dimen/padding_5"
+	                    android:textColor="@color/text_black"
+	                    android:textSize="@dimen/big" />
+	            </LinearLayout>
+        </FrameLayout>
+        <FrameLayout 
+            android:id="@+id/goods_management_cover"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+	        android:paddingTop="@dimen/padding_20"
+	        android:paddingBottom="@dimen/padding_15"
+            android:foreground="@drawable/framelayout_selector"
+            >
+	        <LinearLayout 
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:gravity="center"
+	                android:orientation="vertical"
+	                >
+		            <ImageView
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:src="@drawable/icon_goods_management"
+		                />
+		            <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="商品入库"
+	                    android:layout_marginTop="@dimen/padding_5"
+	                    android:textColor="@color/text_black"
+	                    android:textSize="@dimen/big" />
+	            </LinearLayout>
+        </FrameLayout>
     </LinearLayout>
+    
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/app_color"
+        />
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <FrameLayout 
+            android:id="@+id/deal_management_cover"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+	        android:paddingTop="@dimen/padding_20"
+	        android:paddingBottom="@dimen/padding_15"
+            android:foreground="@drawable/framelayout_selector"
+            >
+	        <LinearLayout 
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:gravity="center"
+	                android:orientation="vertical"
+	                >
+		            <ImageView
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:src="@drawable/icon_deal_management"
+		                />
+		            <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="交易管理"
+	                    android:layout_marginTop="@dimen/padding_5"
+	                    android:textColor="@color/text_black"
+	                    android:textSize="@dimen/big" />
+	            </LinearLayout>
+        </FrameLayout>
+        <FrameLayout 
+            android:id="@+id/bill_management_cover"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+	        android:paddingTop="@dimen/padding_20"
+	        android:paddingBottom="@dimen/padding_15"
+            android:foreground="@drawable/framelayout_selector"
+            >
+	        <LinearLayout 
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:gravity="center"
+	                android:orientation="vertical"
+	                >
+		            <ImageView
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:src="@drawable/icon_bill_management"
+		                />
+		            <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="账单管理"
+	                    android:layout_marginTop="@dimen/padding_5"
+	                    android:textColor="@color/text_black"
+	                    android:textSize="@dimen/big" />
+	            </LinearLayout>
+        </FrameLayout>
+        <FrameLayout 
+            android:id="@+id/business_remainder_cover"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+	        android:paddingTop="@dimen/padding_20"
+	        android:paddingBottom="@dimen/padding_15"
+            android:foreground="@drawable/framelayout_selector"
+            >
+	        <LinearLayout 
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:gravity="center"
+	                android:orientation="vertical"
+	                >
+		            <ImageView
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:src="@drawable/icon_business_remainder"
+		                />
+		            <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="商品入库"
+	                    android:layout_marginTop="@dimen/padding_5"
+	                    android:textColor="@color/text_black"
+	                    android:textSize="@dimen/big" />
+	            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <FrameLayout 
+            android:id="@+id/shop_management_cover"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+	        android:paddingTop="@dimen/padding_20"
+	        android:paddingBottom="@dimen/padding_15"
+            android:foreground="@drawable/framelayout_selector"
+            >
+	        <LinearLayout 
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:gravity="center"
+	                android:orientation="vertical"
+	                >
+		            <ImageView
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:src="@drawable/icon_shop_management"
+		                />
+		            <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="店铺管理"
+	                    android:layout_marginTop="@dimen/padding_5"
+	                    android:textColor="@color/text_black"
+	                    android:textSize="@dimen/big" />
+	            </LinearLayout>
+        </FrameLayout>
+        <FrameLayout 
+            android:id="@+id/fault_repair_cover"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+	        android:paddingTop="@dimen/padding_20"
+	        android:paddingBottom="@dimen/padding_15"
+            android:foreground="@drawable/framelayout_selector"
+            >
+	        <LinearLayout 
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:gravity="center"
+	                android:orientation="vertical"
+	                >
+		            <ImageView
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:src="@drawable/icon_fault_repair"
+		                />
+		            <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="现金结账"
+	                    android:layout_marginTop="@dimen/padding_5"
+	                    android:textColor="@color/text_black"
+	                    android:textSize="@dimen/big" />
+	            </LinearLayout>
+        </FrameLayout>
+        <View 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+    
 </LinearLayout>
 
