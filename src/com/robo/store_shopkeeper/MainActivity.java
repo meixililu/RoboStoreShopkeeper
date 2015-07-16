@@ -37,12 +37,6 @@ public class MainActivity extends ActionBarActivity implements OnPageChangeListe
 	private List<Fragment> fragmentList;
 	private SharedPreferences mSharedPreferences;
 	
-	private int[] titles = {R.string.tab_main_nav_home, R.string.tab_main_nav_shop, 
-			R.string.tab_main_nav_cart, R.string.tab_main_nav_user};
-	
-	private int[] selecters = {R.drawable.tab_nav_home_selector, R.drawable.tab_nav_shop_selector, 
-			R.drawable.tab_nav_cart_selector, R.drawable.tab_nav_user_selector};
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,11 +53,11 @@ public class MainActivity extends ActionBarActivity implements OnPageChangeListe
 		fragmentList.add(new ShopFragment());
 		fragmentList.add(new CartFragment());
 		fragmentList.add(new UserFragment());
-		tabs = (LinearLayout) findViewById(R.id.tabs);
-		viewPager = (ViewPager) findViewById(R.id.itemViewPager);
-		viewPager.setOffscreenPageLimit(4);
-		
-		TabsUtil.initTab(this, tabs, viewPager, titles, selecters);
+//		tabs = (LinearLayout) findViewById(R.id.tabs);
+//		viewPager = (ViewPager) findViewById(R.id.itemViewPager);
+//		viewPager.setOffscreenPageLimit(4);
+//		
+//		TabsUtil.initTab(this, tabs, viewPager, titles, selecters);
 				
 		viewPager.setOnPageChangeListener(this);
 		viewPager.setAdapter(new MainTabViewPagerAdapter(getSupportFragmentManager(), fragmentList));
