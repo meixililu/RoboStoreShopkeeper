@@ -124,6 +124,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 			break;
 		case R.id.more_cover:
 			break;
+		case R.id.goods_ruku_cover:
+			toActivity(GoodsRukuActivity.class,null);
+			break;
 		case R.id.cash_checkout_cover:
 			break;
 		case R.id.goods_management_cover:

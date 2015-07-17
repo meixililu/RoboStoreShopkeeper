@@ -140,7 +140,7 @@ public class LoginActivity extends BaseActivity {
 			toActivity(RegisterActivity.class,null);
 			break;
 		case R.id.forget_pwd_cover:
-			toActivity(ForgetPWDActivity.class,null);
+			toActivity(GoodsRukuActivity.class,null);
 			break;
 		case R.id.login_btn:
 			RequestData();

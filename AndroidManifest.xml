@@ -110,7 +110,7 @@
             android:name=".RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ForgetPWDActivity"
+            android:name=".GoodsRukuActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ModifyPWDActivity"

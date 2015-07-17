@@ -52,7 +52,7 @@ public class UserFragment extends BaseFragment implements OnClickListener{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		LogUtil.DefalutLog(UserFragment.class.getName()+"---onCreateView");
-		setLayoutId(R.layout.fragment_user);
+		setLayoutId(R.layout.activity_shop_management);
         return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
@@ -132,7 +132,7 @@ public class UserFragment extends BaseFragment implements OnClickListener{
 			toActivity(ModifyPWDActivity.class, null);
 			break;
 		case R.id.retrieve_pwd_cover:
-			toActivity(ForgetPWDActivity.class, null);
+			toActivity(GoodsRukuActivity.class, null);
 			break;
 		}
 	}
