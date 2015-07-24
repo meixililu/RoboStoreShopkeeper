@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 
+import com.robo.store_shopkeeper.util.KeyUtil;
 import com.robo.store_shopkeeper.util.LoginUtil;
 import com.robo.store_shopkeeper.util.SPUtil;
 
@@ -42,8 +44,15 @@ public class LoadingActivity extends Activity {
 	}
 	
 	private void toNextPage(){
-		Intent intent = new Intent(LoadingActivity.this, MainActivity.class);
-		startActivity(intent);
+		String userName = mSharedPreferences.getString(KeyUtil.UserNameKey, "");
+		String userPWD = mSharedPreferences.getString(KeyUtil.UserPWDKey, "");
+		if(!TextUtils.isEmpty(userPWD)){
+			Intent intent = new Intent(LoadingActivity.this, MainActivity.class);
+			startActivity(intent);
+		}else{
+			Intent intent = new Intent(LoadingActivity.this, LoginActivity.class);
+			startActivity(intent);
+		}
 		finish();
 	}
 }

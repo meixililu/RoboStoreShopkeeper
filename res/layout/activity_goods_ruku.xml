@@ -97,11 +97,11 @@
         <EditText 
             android:id="@+id/goods_info_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:textColor="@color/text_black"
             android:layout_marginTop="@dimen/padding_10"
             android:textColorHint="@color/text_grey1"
-            android:lines="6"
+            android:lines="1"
 			android:imeOptions="actionNext" 
             android:textCursorDrawable="@null"
             android:hint="此处显示商品信息（自动生成）"

@@ -35,7 +35,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		init();
-		RequestData();
+//		RequestData();
 		LoginUtil.login(this, mSharedPreferences);
 	}
 	
@@ -130,6 +130,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 		case R.id.cash_checkout_cover:
 			break;
 		case R.id.goods_management_cover:
+			toActivity(GoodsManagerActivity.class,null);
 			break;
 		case R.id.deal_management_cover:
 			break;

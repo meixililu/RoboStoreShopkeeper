@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.robo.store_shopkeeper.dao.CommonResponse;
+import com.robo.store_shopkeeper.http.HttpParameter;
 import com.robo.store_shopkeeper.http.RoboHttpClient;
 import com.robo.store_shopkeeper.http.TextHttpResponseHandler;
 import com.robo.store_shopkeeper.util.Md5;
@@ -30,7 +31,7 @@ public class GoodsRukuActivity extends BaseActivity {
 	private ProgressDialog progressDialog;
 	
 	private String goodsBarcode,deliveryCode,memo;
-	private int count;
+	private String count;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -60,13 +61,24 @@ public class GoodsRukuActivity extends BaseActivity {
 		submit_btn.setOnClickListener(this);
 	}
 	
-	private void RequestIdentityCodeData(){
-//		userName = username_input.getText().toString().trim();
+	private boolean valisData(){
+		boolean isNotEmpty = false;
+		goodsBarcode = goods_code_input.getText().toString().trim();
+		count = number_input.getText().toString().trim();
+		
+		
+		return isNotEmpty;
+	}
+	
+	private void RequestData(){
 		if(ValidUtil.validPhoneData(this, "")){
 			showDialog();
 			HashMap<String, String> params = new HashMap<String, String>();
-			params.put("flag", "0");
-			RoboHttpClient.get("applyCheckCode", params, new TextHttpResponseHandler(){
+			params.put("goodsBarcode", "0");
+			params.put("count", "0");
+			params.put("deliveryId", "0");
+			params.put("coId", "0");
+			RoboHttpClient.get(HttpParameter.goodUrl,"applyCheckCode", params, new TextHttpResponseHandler(){
 
 				@Override
 				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {

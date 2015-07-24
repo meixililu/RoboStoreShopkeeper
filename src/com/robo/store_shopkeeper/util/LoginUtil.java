@@ -28,9 +28,9 @@ public class LoginUtil {
 			if(!TextUtils.isEmpty(userPWD)){
 				isLogin = true;
 				HashMap<String, String> params = new HashMap<String, String>();
-				params.put("mobile", userName);
+				params.put("userName", userName);
 				params.put("password", userPWD);
-				RoboHttpClient.get("userLogin", params, new TextHttpResponseHandler(){
+				RoboHttpClient.get("operatorLogin", params, new TextHttpResponseHandler(){
 					@Override
 					public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
 					}

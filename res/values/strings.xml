@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">萝卜便利店</string>
+    <string name="app_name">萝卜店主</string>
     <string name="tab_main_nav_home">首页</string>
     <string name="tab_main_nav_shop">店铺</string>
     <string name="tab_main_nav_cart">购物车</string>

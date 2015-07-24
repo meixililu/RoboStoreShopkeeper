@@ -11,7 +11,7 @@ import com.robo.store_shopkeeper.dao.CommonResponse;
 
 public class ResultParse {
 	
-	public static final String ResultOk = "0";
+	public static final String ResultOk = "00000";
 	
 	public static final String TokenOut = "10003";
 
