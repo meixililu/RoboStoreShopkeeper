@@ -7,6 +7,7 @@ import org.apache.http.Header;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import com.robo.store_shopkeeper.http.HttpParameter;
 import com.robo.store_shopkeeper.http.RoboHttpClient;
 import com.robo.store_shopkeeper.http.TextHttpResponseHandler;
 import com.robo.store_shopkeeper.util.Md5;
+import com.robo.store_shopkeeper.util.NumberUtil;
 import com.robo.store_shopkeeper.util.ResultParse;
 import com.robo.store_shopkeeper.util.ToastUtil;
 import com.robo.store_shopkeeper.util.ValidUtil;
@@ -30,7 +32,7 @@ public class GoodsRukuActivity extends BaseActivity {
 	private Button search_btn,submit_btn;
 	private ProgressDialog progressDialog;
 	
-	private String goodsBarcode,deliveryCode,memo;
+	private String goodsBarcode,deliveryCode,coId;
 	private String count;
 	
 	@Override
@@ -62,23 +64,41 @@ public class GoodsRukuActivity extends BaseActivity {
 	}
 	
 	private boolean valisData(){
-		boolean isNotEmpty = false;
+		boolean isvalid = true;
 		goodsBarcode = goods_code_input.getText().toString().trim();
 		count = number_input.getText().toString().trim();
+		deliveryCode = delivery_number_input.getText().toString().trim();
+		coId = service_keyword_input.getText().toString().trim();
+		int number = NumberUtil.StringToInt(count);
+		if(TextUtils.isEmpty(goodsBarcode)){
+			ToastUtil.diaplayMesShort(this, "请输入商品条码数字");
+			isvalid = false;
+		}
+		if(TextUtils.isEmpty(deliveryCode)){
+			ToastUtil.diaplayMesShort(this, "请输入配送单号");
+			isvalid = false;
+		}
+		if(TextUtils.isEmpty(coId)){
+			ToastUtil.diaplayMesShort(this, "请输入服务提供商");
+			isvalid = false;
+		}
+		if(number < 1){
+			ToastUtil.diaplayMesShort(this, "入库数量必须大于0");
+			isvalid = false;
+		}
 		
-		
-		return isNotEmpty;
+		return isvalid;
 	}
 	
 	private void RequestData(){
-		if(ValidUtil.validPhoneData(this, "")){
+		if(valisData()){
 			showDialog();
 			HashMap<String, String> params = new HashMap<String, String>();
-			params.put("goodsBarcode", "0");
-			params.put("count", "0");
-			params.put("deliveryId", "0");
-			params.put("coId", "0");
-			RoboHttpClient.get(HttpParameter.goodUrl,"applyCheckCode", params, new TextHttpResponseHandler(){
+			params.put("goodsBarcode", goodsBarcode);
+			params.put("count", count);
+			params.put("deliveryId", deliveryCode);
+			params.put("coId", coId);
+			RoboHttpClient.get(HttpParameter.goodUrl,"goodsInStorage", params, new TextHttpResponseHandler(){
 
 				@Override
 				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
@@ -89,7 +109,7 @@ public class GoodsRukuActivity extends BaseActivity {
 				public void onSuccess(int arg0, Header[] arg1, String result) {
 					CommonResponse mCommonResponse = ResultParse.parseResult(result,CommonResponse.class);
 					if(ResultParse.handleResutl(GoodsRukuActivity.this, mCommonResponse)){
-						ToastUtil.diaplayMesLong(GoodsRukuActivity.this, "验证码已发送");
+						ToastUtil.diaplayMesShort(GoodsRukuActivity.this, "入库成功");
 					}
 				}
 				
@@ -117,6 +137,7 @@ public class GoodsRukuActivity extends BaseActivity {
 		case R.id.search_btn:
 			break;
 		case R.id.submit_btn:
+			RequestData();
 			break;
 		}
 	}
