@@ -174,31 +174,31 @@ public class ShopDetailActivity extends BaseActivity implements OnClickListener{
 				public void onSuccess(int arg0, Header[] arg1, String result) {
 					mGetGoodsListResponse = (GetShopInfoResponse) ResultParse.parseResult(result,GetShopInfoResponse.class);
 					if(ResultParse.handleResutl(ShopDetailActivity.this, mGetGoodsListResponse)){
-						List<GoodsType> typeList = mGetGoodsListResponse.getTypeList();
-						Collections.reverse(typeList);
-						mGoodsTypeList.clear();
-						mGoodsTypeList.addAll(typeList);
-						HomeUtil.setSelectedMenu(mGoodsTypeList, goodType);
+//						List<GoodsType> typeList = mGetGoodsListResponse.getTypeList();
+//						Collections.reverse(typeList);
+//						mGoodsTypeList.clear();
+//						mGoodsTypeList.addAll(typeList);
+//						HomeUtil.setSelectedMenu(mGoodsTypeList, goodType);
 						
-						List<GoodsBase> mGoodsList = mGetGoodsListResponse.getGoodsList();
-						goodsList.addAll(mGoodsList);
-						
-						mMenuAdapter.notifyDataSetChanged();
-						mHomeListViewAdapter.notifyDataSetChanged();
-						if(mGoodsList.size() > 0){
-							if(mGoodsList.size() < Settings.pageCount && pageIndex == 0){
-								isLoadMoreData = false;
-								mListView.removeFooterView(footerView);
-							}else{
-								isLoadMoreData = true;
-								footerView.setVisibility(View.VISIBLE);
-								pageIndex++;
-							}
-						}else{
-							isLoadMoreData = false;
-							load_more_data.setVisibility(View.GONE);
-							no_more_data.setVisibility(View.VISIBLE);
-						}
+//						List<GoodsBase> mGoodsList = mGetGoodsListResponse.getGoodsList();
+//						goodsList.addAll(mGoodsList);
+//						
+//						mMenuAdapter.notifyDataSetChanged();
+//						mHomeListViewAdapter.notifyDataSetChanged();
+//						if(mGoodsList.size() > 0){
+//							if(mGoodsList.size() < Settings.pageCount && pageIndex == 0){
+//								isLoadMoreData = false;
+//								mListView.removeFooterView(footerView);
+//							}else{
+//								isLoadMoreData = true;
+//								footerView.setVisibility(View.VISIBLE);
+//								pageIndex++;
+//							}
+//						}else{
+//							isLoadMoreData = false;
+//							load_more_data.setVisibility(View.GONE);
+//							no_more_data.setVisibility(View.VISIBLE);
+//						}
 					}else{
 						mListView.removeFooterView(footerView);
 					}
@@ -239,7 +239,7 @@ public class ShopDetailActivity extends BaseActivity implements OnClickListener{
 		Bundle mBundle = new Bundle();
 		mBundle.putString(KeyUtil.LatitudeKey, mGetGoodsListResponse.getLatitude());	
 		mBundle.putString(KeyUtil.LongitudeKey, mGetGoodsListResponse.getLongitude());	
-		mBundle.putString(KeyUtil.ShopMemoKey, mGetGoodsListResponse.getShopMemo());	
+//		mBundle.putString(KeyUtil.ShopMemoKey, mGetGoodsListResponse.getShopMemo());	
 		toActivity(ShopLocationActivity.class, mBundle);
 	}
 }

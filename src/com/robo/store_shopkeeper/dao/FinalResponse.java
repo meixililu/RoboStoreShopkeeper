@@ -1,14 +1,14 @@
 package com.robo.store_shopkeeper.dao;
 
 public class FinalResponse {
-	private Object DataList ;
+	private Object dataList ;
 
 	public Object getDataList() {
-		return DataList;
+		return dataList;
 	}
 
 	public void setDataList(Object dataList) {
-		DataList = dataList;
+		this.dataList = dataList;
 	}
 
 

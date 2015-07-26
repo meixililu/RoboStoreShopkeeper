@@ -1,8 +1,8 @@
 package com.robo.store_shopkeeper.dao;
 
-
-public class GetShopInfoResponse extends CommonResponse {
+public class UpdateShopInfoRequest extends CommonRequest {
 	private String shopId; // 店铺ID
+	private String shopName; // 店铺名称
 	private String memo; // 店铺简介
 	private String longitude; // 经度
 	private String latitude; // 纬度
@@ -13,7 +13,9 @@ public class GetShopInfoResponse extends CommonResponse {
 	private String businessNO; // 营业执照
 	private String opendate; // 开店时间 yyyy-MM-dd
 	private String provinceId; // 省份Id
+	private String provinceName; // 省份名称
 	private String cityId; // 城市Id
+	private String cityName; // 城市名称
 	private String address; // 详细地址
 
 	public String getShopId() {
@@ -22,6 +24,14 @@ public class GetShopInfoResponse extends CommonResponse {
 
 	public void setShopId(String shopId) {
 		this.shopId = shopId;
+	}
+
+	public String getShopName() {
+		return shopName;
+	}
+
+	public void setShopName(String shopName) {
+		this.shopName = shopName;
 	}
 
 	public String getMemo() {
@@ -118,5 +128,21 @@ public class GetShopInfoResponse extends CommonResponse {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getProvinceName() {
+		return provinceName;
+	}
+
+	public void setProvinceName(String provinceName) {
+		this.provinceName = provinceName;
+	}
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
 	}
 }

@@ -1,28 +1,32 @@
 package com.robo.store_shopkeeper;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.http.Header;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.robo.store_shopkeeper.dao.CommonResponse;
+import com.robo.store_shopkeeper.dao.QueryCoInfoResponse;
+import com.robo.store_shopkeeper.dao.QueryCoInfoVo;
+import com.robo.store_shopkeeper.dialog.FuWuShangDialog;
+import com.robo.store_shopkeeper.dialog.FuWuShangDialog.onFuWuShangDialogListener;
 import com.robo.store_shopkeeper.http.HttpParameter;
 import com.robo.store_shopkeeper.http.RoboHttpClient;
 import com.robo.store_shopkeeper.http.TextHttpResponseHandler;
-import com.robo.store_shopkeeper.util.Md5;
+import com.robo.store_shopkeeper.util.LogUtil;
 import com.robo.store_shopkeeper.util.NumberUtil;
 import com.robo.store_shopkeeper.util.ResultParse;
 import com.robo.store_shopkeeper.util.ToastUtil;
-import com.robo.store_shopkeeper.util.ValidUtil;
 
 public class GoodsRukuActivity extends BaseActivity {
 
@@ -32,7 +36,7 @@ public class GoodsRukuActivity extends BaseActivity {
 	private Button search_btn,submit_btn;
 	private ProgressDialog progressDialog;
 	
-	private String goodsBarcode,deliveryCode,coId;
+	private String goodsBarcode,deliveryCode,coId,coName;
 	private String count;
 	
 	@Override
@@ -61,6 +65,38 @@ public class GoodsRukuActivity extends BaseActivity {
 		scan_btn.setOnClickListener(this);
 		search_btn.setOnClickListener(this);
 		submit_btn.setOnClickListener(this);
+		goods_code_input.setOnFocusChangeListener(new OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if(!hasFocus){
+					RequestGoodInfoData();
+				}
+			}
+		});
+	}
+	
+	private void RequestGoodInfoData(){
+		goodsBarcode = goods_code_input.getText().toString().trim();
+		if(!TextUtils.isEmpty(goodsBarcode)){
+			HashMap<String, String> params = new HashMap<String, String>();
+			params.put("goodsBarcode", goodsBarcode);
+			RoboHttpClient.get(HttpParameter.goodUrl,"queryGoodsInfo", params, new TextHttpResponseHandler(){
+				@Override
+				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
+					LogUtil.DefalutLog("连接失败，请重试！");
+				}
+				@Override
+				public void onSuccess(int arg0, Header[] arg1, String result) {
+					CommonResponse mCommonResponse = ResultParse.parseResult(result,CommonResponse.class);
+					if(ResultParse.handleResutl(GoodsRukuActivity.this, mCommonResponse)){
+						goods_info_input.setText("");
+					}
+				}
+				@Override
+				public void onFinish() {
+				}
+			});
+		}
 	}
 	
 	private boolean valisData(){
@@ -68,7 +104,6 @@ public class GoodsRukuActivity extends BaseActivity {
 		goodsBarcode = goods_code_input.getText().toString().trim();
 		count = number_input.getText().toString().trim();
 		deliveryCode = delivery_number_input.getText().toString().trim();
-		coId = service_keyword_input.getText().toString().trim();
 		int number = NumberUtil.StringToInt(count);
 		if(TextUtils.isEmpty(goodsBarcode)){
 			ToastUtil.diaplayMesShort(this, "请输入商品条码数字");
@@ -92,7 +127,7 @@ public class GoodsRukuActivity extends BaseActivity {
 	
 	private void RequestData(){
 		if(valisData()){
-			showDialog();
+			final ProgressDialog progressDialog = ProgressDialog.show(this, "", "正在提交...", true, false);
 			HashMap<String, String> params = new HashMap<String, String>();
 			params.put("goodsBarcode", goodsBarcode);
 			params.put("count", count);
@@ -121,10 +156,66 @@ public class GoodsRukuActivity extends BaseActivity {
 		}
 	}
 	
-	private void showDialog(){
-		progressDialog = ProgressDialog.show(this, "", "正在提交...", true, false);
+	private boolean validFuFuData(){
+		boolean isvalid = true;
+		coName = service_keyword_input.getText().toString().trim();
+		if(TextUtils.isEmpty(coName)){
+			ToastUtil.diaplayMesShort(this, "请输入服务提供商");
+			isvalid = false;
+		}
+		return isvalid;
 	}
 	
+	private void RequestFuWuData(){
+		if(validFuFuData()){
+			final ProgressDialog progressDialog = ProgressDialog.show(this, "", "正在加载...", true, false);
+			HashMap<String, String> params = new HashMap<String, String>();
+			params.put("coName", coName);
+			RoboHttpClient.get(HttpParameter.goodUrl,"queryCoInfo", params, new TextHttpResponseHandler(){
+
+				@Override
+				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
+					ToastUtil.diaplayMesShort(GoodsRukuActivity.this, "连接失败，请重试！");
+				}
+
+				@Override
+				public void onSuccess(int arg0, Header[] arg1, String result) {
+					QueryCoInfoResponse mCommonResponse = (QueryCoInfoResponse) ResultParse.parseResult(result,QueryCoInfoResponse.class);
+					if(ResultParse.handleResutl(GoodsRukuActivity.this, mCommonResponse)){
+//						for (int i = 0; i < 10; i++) {
+//							QueryCoInfoVo mQueryCoInfoVo = new QueryCoInfoVo();
+//							mQueryCoInfoVo.setCoId("001");
+//							mQueryCoInfoVo.setCoName("北京供应商");
+//							mCommonResponse.getList().add(mQueryCoInfoVo);
+//						}
+						if(mCommonResponse.getList().size() > 0){
+							showSupplierDialog(mCommonResponse.getList());
+						}else{
+							ToastUtil.diaplayMesShort(GoodsRukuActivity.this, "没有相关信息，请重试");
+						}
+					}
+				}
+				
+				@Override
+				public void onFinish() {
+					progressDialog.dismiss();
+				}
+			});
+		}
+	}
+	
+	private void showSupplierDialog(List<QueryCoInfoVo> list){
+		final FuWuShangDialog mDialog = new FuWuShangDialog(this,list);
+		mDialog.setmListener(new onFuWuShangDialogListener() {
+			@Override
+			public void onItemClick(String cid) {
+				coId = cid;
+				ToastUtil.diaplayMesShort(GoodsRukuActivity.this, coId);
+				mDialog.dismiss();
+			}
+		});
+		mDialog.show();
+	}
 	
 	@Override
 	public void onClick(View v) {
@@ -135,6 +226,7 @@ public class GoodsRukuActivity extends BaseActivity {
 		case R.id.scan_btn:
 			break;
 		case R.id.search_btn:
+			RequestFuWuData();
 			break;
 		case R.id.submit_btn:
 			RequestData();
