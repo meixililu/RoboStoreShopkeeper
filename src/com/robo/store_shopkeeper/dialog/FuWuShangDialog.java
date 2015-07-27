@@ -40,7 +40,7 @@ public class FuWuShangDialog extends Dialog {
 	
 	
 	public interface onFuWuShangDialogListener{
-		public void onItemClick(String coId);
+		public void onItemClick(String coId, String name);
 	}
 
 

@@ -73,14 +73,14 @@
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait" />
-        
-        
-        
-        
-        
         <activity
-            android:name=".ShopLocationActivity"
+            android:name=".CashOrderListActivity"
             android:screenOrientation="portrait" />
+        
+        
+        
+        
+        
         <activity
             android:name=".ConfirmOrderActivity"
             android:screenOrientation="portrait" />

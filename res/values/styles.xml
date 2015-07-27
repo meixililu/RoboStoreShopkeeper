@@ -3,6 +3,7 @@
     <style name="dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item><!--边框-->
         <item name="android:windowNoTitle">true	</item>
+        <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@color/none</item><!--背景透明-->
     </style>
     

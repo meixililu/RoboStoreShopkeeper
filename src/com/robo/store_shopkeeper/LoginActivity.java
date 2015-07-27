@@ -94,7 +94,6 @@ public class LoginActivity extends BaseActivity {
 					UserLoginResponse mUserLoginResponse = (UserLoginResponse) ResultParse.parseResult(result,UserLoginResponse.class);
 					if(ResultParse.handleResutl(LoginActivity.this, mUserLoginResponse)){
 						HttpParameter.accessToken = mUserLoginResponse.getAccessToken();
-						ToastUtil.diaplayMesLong(LoginActivity.this, "登录成功");
 						SPUtil.saveSharedPreferences(mSharedPreferences, KeyUtil.UserPWDKey, Md5.d5(pwd));
 						LoginUtil.isLogin = true;
 						toActivity(MainActivity.class, null);

@@ -10,14 +10,17 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.robo.store_shopkeeper.dao.CommonResponse;
 import com.robo.store_shopkeeper.dao.QueryCoInfoResponse;
 import com.robo.store_shopkeeper.dao.QueryCoInfoVo;
+import com.robo.store_shopkeeper.dao.QueryGoodsInfoResponse;
 import com.robo.store_shopkeeper.dialog.FuWuShangDialog;
 import com.robo.store_shopkeeper.dialog.FuWuShangDialog.onFuWuShangDialogListener;
 import com.robo.store_shopkeeper.http.HttpParameter;
@@ -27,12 +30,14 @@ import com.robo.store_shopkeeper.util.LogUtil;
 import com.robo.store_shopkeeper.util.NumberUtil;
 import com.robo.store_shopkeeper.util.ResultParse;
 import com.robo.store_shopkeeper.util.ToastUtil;
+import com.robo.store_shopkeeper.util.UnicodeToStr;
 
 public class GoodsRukuActivity extends BaseActivity {
 
 	private TextView history_btn,error_txt;
 	private EditText goods_code_input,goods_info_input,number_input,delivery_number_input,service_keyword_input;
 	private ImageButton scan_btn;
+	private ImageView refresh_goods_info;
 	private Button search_btn,submit_btn;
 	private ProgressDialog progressDialog;
 	
@@ -48,8 +53,10 @@ public class GoodsRukuActivity extends BaseActivity {
 	}
 	
 	private void init(){
+		getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 		history_btn = (TextView) findViewById(R.id.history_btn);
 		error_txt = (TextView) findViewById(R.id.error_txt);
+		refresh_goods_info = (ImageView) findViewById(R.id.refresh_goods_info);
 		
 		goods_code_input = (EditText) findViewById(R.id.goods_code_input);
 		goods_info_input = (EditText) findViewById(R.id.goods_info_input);
@@ -65,6 +72,7 @@ public class GoodsRukuActivity extends BaseActivity {
 		scan_btn.setOnClickListener(this);
 		search_btn.setOnClickListener(this);
 		submit_btn.setOnClickListener(this);
+		refresh_goods_info.setOnClickListener(this);
 		goods_code_input.setOnFocusChangeListener(new OnFocusChangeListener() {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
@@ -76,6 +84,7 @@ public class GoodsRukuActivity extends BaseActivity {
 	}
 	
 	private void RequestGoodInfoData(){
+		//6923450657935
 		goodsBarcode = goods_code_input.getText().toString().trim();
 		if(!TextUtils.isEmpty(goodsBarcode)){
 			HashMap<String, String> params = new HashMap<String, String>();
@@ -87,9 +96,9 @@ public class GoodsRukuActivity extends BaseActivity {
 				}
 				@Override
 				public void onSuccess(int arg0, Header[] arg1, String result) {
-					CommonResponse mCommonResponse = ResultParse.parseResult(result,CommonResponse.class);
+					QueryGoodsInfoResponse mCommonResponse = (QueryGoodsInfoResponse) ResultParse.parseResult(result,QueryGoodsInfoResponse.class);
 					if(ResultParse.handleResutl(GoodsRukuActivity.this, mCommonResponse)){
-						goods_info_input.setText("");
+						goods_info_input.setText(mCommonResponse.getGoodsName());
 					}
 				}
 				@Override
@@ -170,7 +179,7 @@ public class GoodsRukuActivity extends BaseActivity {
 		if(validFuFuData()){
 			final ProgressDialog progressDialog = ProgressDialog.show(this, "", "正在加载...", true, false);
 			HashMap<String, String> params = new HashMap<String, String>();
-			params.put("coName", coName);
+			params.put("coName", UnicodeToStr.toUnicode(coName));
 			RoboHttpClient.get(HttpParameter.goodUrl,"queryCoInfo", params, new TextHttpResponseHandler(){
 
 				@Override
@@ -182,12 +191,6 @@ public class GoodsRukuActivity extends BaseActivity {
 				public void onSuccess(int arg0, Header[] arg1, String result) {
 					QueryCoInfoResponse mCommonResponse = (QueryCoInfoResponse) ResultParse.parseResult(result,QueryCoInfoResponse.class);
 					if(ResultParse.handleResutl(GoodsRukuActivity.this, mCommonResponse)){
-//						for (int i = 0; i < 10; i++) {
-//							QueryCoInfoVo mQueryCoInfoVo = new QueryCoInfoVo();
-//							mQueryCoInfoVo.setCoId("001");
-//							mQueryCoInfoVo.setCoName("北京供应商");
-//							mCommonResponse.getList().add(mQueryCoInfoVo);
-//						}
 						if(mCommonResponse.getList().size() > 0){
 							showSupplierDialog(mCommonResponse.getList());
 						}else{
@@ -208,9 +211,9 @@ public class GoodsRukuActivity extends BaseActivity {
 		final FuWuShangDialog mDialog = new FuWuShangDialog(this,list);
 		mDialog.setmListener(new onFuWuShangDialogListener() {
 			@Override
-			public void onItemClick(String cid) {
+			public void onItemClick(String cid, String name) {
 				coId = cid;
-				ToastUtil.diaplayMesShort(GoodsRukuActivity.this, coId);
+				service_keyword_input.setText(name);
 				mDialog.dismiss();
 			}
 		});
@@ -222,6 +225,9 @@ public class GoodsRukuActivity extends BaseActivity {
 		super.onClick(v);
 		switch(v.getId()){
 		case R.id.history_btn:
+			break;
+		case R.id.refresh_goods_info:
+			RequestGoodInfoData();
 			break;
 		case R.id.scan_btn:
 			break;

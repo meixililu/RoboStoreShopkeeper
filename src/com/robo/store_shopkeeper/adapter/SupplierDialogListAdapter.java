@@ -63,7 +63,7 @@ public class SupplierDialogListAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				if(mListener != null){
-					mListener.onItemClick(mQueryCoInfoVo.getCoId());
+					mListener.onItemClick(mQueryCoInfoVo.getCoId(), mQueryCoInfoVo.getCoName());
 				}
 			}
 		});

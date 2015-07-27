@@ -62,37 +62,30 @@
         </service>
         
         <activity
-            android:name=".ShopDetailActivity"
+            android:name=".GoodsManagerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ShopLocationActivity"
+            android:name=".GoodsRukuActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CashOrderListActivity"
+            android:screenOrientation="portrait" />
+        
+        
+        
+        
+        
+        <activity
             android:name=".ConfirmOrderActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".CheckAllOrdersActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".OrderType1Activity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".OrderType2Activity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".OrderType3Activity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".OrderType4Activity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".OrderType5Activity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".OrderType6Activity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".SearchActivity"
@@ -101,16 +94,10 @@
             android:name=".SearchResultActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".LoginActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".GoodsDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".RegisterActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ForgetPWDActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ModifyPWDActivity"

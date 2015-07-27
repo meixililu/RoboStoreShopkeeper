@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.robo.store_shopkeeper.R;
 import com.robo.store_shopkeeper.SearchActivity;
-import com.robo.store_shopkeeper.ShopDetailActivity;
+import com.robo.store_shopkeeper.CashOrderListActivity;
 import com.robo.store_shopkeeper.dao.ShopBase;
 import com.robo.store_shopkeeper.util.KeyUtil;
 import com.robo.store_shopkeeper.view.PinnedSectionListView.PinnedSectionListAdapter;
@@ -69,7 +69,7 @@ public class ShopSearchListAdapter extends BaseAdapter {
 					Bundle mBundle = new Bundle();
 					mBundle.putString(KeyUtil.ShopDetailTitleKey, mShopBase.getShopName());
 					mBundle.putString(KeyUtil.ShopDetailIdKey, mShopBase.getShopId());
-					Intent intent = new Intent(context,ShopDetailActivity.class);
+					Intent intent = new Intent(context,CashOrderListActivity.class);
 					intent.putExtra(KeyUtil.BundleKey, mBundle);
 					context.startActivity(intent);
 				}
