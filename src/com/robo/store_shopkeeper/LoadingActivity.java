@@ -47,6 +47,7 @@ public class LoadingActivity extends Activity {
 		String userName = mSharedPreferences.getString(KeyUtil.UserNameKey, "");
 		String userPWD = mSharedPreferences.getString(KeyUtil.UserPWDKey, "");
 		if(!TextUtils.isEmpty(userPWD)){
+			LoginUtil.isLogin = true;
 			Intent intent = new Intent(LoadingActivity.this, MainActivity.class);
 			startActivity(intent);
 		}else{

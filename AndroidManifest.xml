@@ -62,6 +62,24 @@
         </service>
         
         <activity
+            android:name=".ShopManagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MoreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FaultRepairActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BillManagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TradeManagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".GoodsManagerActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -72,6 +72,17 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 	}
 	
 	@Override
+	protected void onResume() {
+		super.onResume();
+		if(!LoginUtil.isLogin){
+			Intent intent = new Intent(this, LoginActivity.class);
+			startActivity(intent);
+			this.finish();
+		}
+	}
+	
+	
+	@Override
 	public void onBackPressed() {
     	if ((System.currentTimeMillis() - exitTime) > 2000) {
 			Toast.makeText(getApplicationContext(), this.getResources().getString(R.string.exit_program), 0).show();
@@ -121,8 +132,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 	public void onClick(View v) {
 		switch(v.getId()){
 		case R.id.user_cover:
+			toActivity(SettingActivity.class,null);
 			break;
 		case R.id.more_cover:
+			toActivity(MoreActivity.class,null);
 			break;
 		case R.id.goods_ruku_cover:
 			toActivity(GoodsRukuActivity.class,null);
@@ -134,14 +147,18 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 			toActivity(GoodsManagerActivity.class,null);
 			break;
 		case R.id.deal_management_cover:
+			toActivity(TradeManagerActivity.class,null);
 			break;
 		case R.id.bill_management_cover:
+			toActivity(BillManagerActivity.class,null);
 			break;
 		case R.id.business_remainder_cover:
 			break;
 		case R.id.shop_management_cover:
+			toActivity(ShopManagerActivity.class,null);
 			break;
 		case R.id.fault_repair_cover:
+			toActivity(FaultRepairActivity.class,null);
 			break;
 		}
 	}
