@@ -1,39 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/padding_15"
-    android:background="@color/white"
     android:orientation="vertical" >
-    
-    <Button 
-        android:id="@+id/all_btn"
+    <ListView
+        android:id="@+id/content_lv"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/btn_login_selector"
-        android:textColor="@drawable/text_white_to_gray_selector"
-        android:text="全部"
-        android:textSize="@dimen/big"
-        />
-    <Button 
-        android:id="@+id/non_payment_btn"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="@dimen/padding_15"
-        android:background="@drawable/btn_login_selector"
-        android:textColor="@drawable/text_white_to_gray_selector"
-        android:text="未付款"
-        android:textSize="@dimen/big"
-        />
-    <Button 
-        android:id="@+id/account_paid_btn"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="@dimen/padding_15"
-        android:background="@drawable/btn_login_selector"
-        android:textColor="@drawable/text_white_to_gray_selector"
-        android:text="已付款"
-        android:textSize="@dimen/big"
-        />
+        android:layout_height="match_parent"
+        android:background="@color/none"
+        android:cacheColorHint="@color/none"
+        android:divider="@color/text_tint2"
+        android:dividerHeight="1px"
+        android:fadingEdge="none"
+        android:scrollbars="none" />
 </LinearLayout>

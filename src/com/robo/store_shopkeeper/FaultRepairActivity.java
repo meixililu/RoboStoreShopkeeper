@@ -81,7 +81,7 @@ public class FaultRepairActivity extends BaseActivity {
 			HashMap<String, String> params = new HashMap<String, String>();
 			params.put("machineId", machine_id);
 			params.put("failureInfo", error);
-			RoboHttpClient.get(HttpParameter.shopsUrl,"uploadFailure", params, new TextHttpResponseHandler(){
+			RoboHttpClient.post(HttpParameter.shopsUrl,"uploadFailure", params, new TextHttpResponseHandler(){
 
 				@Override
 				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {

@@ -119,7 +119,7 @@ public class CashOrderListActivity extends BaseActivity implements OnClickListen
 			params.put("checkOutStatus", checkOutStatus);
 			params.put("pageIndex", pageIndex);
 			params.put("pageCount", Settings.pageCount);
-			RoboHttpClient.get(HttpParameter.orderUrl,"getCashOrderList", params, new TextHttpResponseHandler(){
+			RoboHttpClient.post(HttpParameter.orderUrl,"getCashOrderList", params, new TextHttpResponseHandler(){
 				
 				@Override
 				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {

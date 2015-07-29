@@ -24,7 +24,7 @@ public class CashOrderMenuDialog extends Dialog implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.dialog_supplier_list);
+		setContentView(R.layout.dialog_cash_menu);
 		getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		all_btn = (Button) findViewById(R.id.all_btn);
 		non_payment_btn = (Button) findViewById(R.id.non_payment_btn);

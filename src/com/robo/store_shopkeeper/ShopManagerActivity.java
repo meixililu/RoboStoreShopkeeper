@@ -68,7 +68,7 @@ public class ShopManagerActivity extends BaseActivity implements View.OnClickLis
 		showProgressbar();
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("shopId", "");
-		RoboHttpClient.get(HttpParameter.shopsUrl,"getShopInfo", params, new TextHttpResponseHandler(){
+		RoboHttpClient.post(HttpParameter.shopsUrl,"getShopInfo", params, new TextHttpResponseHandler(){
 			@Override
 			public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
 				ToastUtil.diaplayMesLong(ShopManagerActivity.this, "连接失败，请重试！");

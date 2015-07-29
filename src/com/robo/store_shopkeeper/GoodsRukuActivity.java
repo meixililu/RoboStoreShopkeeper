@@ -89,16 +89,19 @@ public class GoodsRukuActivity extends BaseActivity {
 		if(!TextUtils.isEmpty(goodsBarcode)){
 			HashMap<String, String> params = new HashMap<String, String>();
 			params.put("goodsBarcode", goodsBarcode);
-			RoboHttpClient.get(HttpParameter.goodUrl,"queryGoodsInfo", params, new TextHttpResponseHandler(){
+			RoboHttpClient.post(HttpParameter.goodUrl,"queryGoodsInfo", params, new TextHttpResponseHandler(){
 				@Override
 				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
 					LogUtil.DefalutLog("连接失败，请重试！");
+					goods_info_input.setText("");
 				}
 				@Override
 				public void onSuccess(int arg0, Header[] arg1, String result) {
 					QueryGoodsInfoResponse mCommonResponse = (QueryGoodsInfoResponse) ResultParse.parseResult(result,QueryGoodsInfoResponse.class);
 					if(ResultParse.handleResutl(GoodsRukuActivity.this, mCommonResponse)){
 						goods_info_input.setText(mCommonResponse.getGoodsName());
+					}else{
+						goods_info_input.setText("");
 					}
 				}
 				@Override
@@ -142,7 +145,7 @@ public class GoodsRukuActivity extends BaseActivity {
 			params.put("count", count);
 			params.put("deliveryId", deliveryCode);
 			params.put("coId", coId);
-			RoboHttpClient.get(HttpParameter.goodUrl,"goodsInStorage", params, new TextHttpResponseHandler(){
+			RoboHttpClient.post(HttpParameter.goodUrl,"goodsInStorage", params, new TextHttpResponseHandler(){
 
 				@Override
 				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
@@ -180,7 +183,7 @@ public class GoodsRukuActivity extends BaseActivity {
 			final ProgressDialog progressDialog = ProgressDialog.show(this, "", "正在加载...", true, false);
 			HashMap<String, String> params = new HashMap<String, String>();
 			params.put("coName", UnicodeToStr.toUnicode(coName));
-			RoboHttpClient.get(HttpParameter.goodUrl,"queryCoInfo", params, new TextHttpResponseHandler(){
+			RoboHttpClient.post(HttpParameter.goodUrl,"queryCoInfo", params, new TextHttpResponseHandler(){
 
 				@Override
 				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {

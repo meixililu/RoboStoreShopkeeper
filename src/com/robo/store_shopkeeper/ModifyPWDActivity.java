@@ -86,7 +86,7 @@ public class ModifyPWDActivity extends BaseActivity {
 			HashMap<String, String> params = new HashMap<String, String>();
 			params.put("currentPwd", Md5.d5(oldPWD));
 			params.put("newPwd", Md5.d5(newPWD));
-			RoboHttpClient.get("modifyPassword", params, new TextHttpResponseHandler(){
+			RoboHttpClient.post("modifyPassword", params, new TextHttpResponseHandler(){
 
 				@Override
 				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {

@@ -30,7 +30,7 @@ public class LoginUtil {
 				HashMap<String, String> params = new HashMap<String, String>();
 				params.put("userName", userName);
 				params.put("password", userPWD);
-				RoboHttpClient.get("operatorLogin", params, new TextHttpResponseHandler(){
+				RoboHttpClient.post("operatorLogin", params, new TextHttpResponseHandler(){
 					@Override
 					public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
 					}
