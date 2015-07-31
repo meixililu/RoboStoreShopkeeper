@@ -32,23 +32,23 @@ import com.robo.store_shopkeeper.util.ResultParse;
 import com.robo.store_shopkeeper.util.ToastUtil;
 import com.robo.store_shopkeeper.util.UnicodeToStr;
 
-public class GoodsRukuActivity extends BaseActivity {
+public class GoodsReportOrReturnActivity extends BaseActivity {
 
 	private TextView history_btn,error_txt;
-	private EditText goods_code_input,goods_info_input,number_input,delivery_number_input,service_keyword_input;
+	private EditText goods_code_input,goods_info_input,number_input,delivery_number_input,service_keyword_input,damage_memo;
 	private ImageButton scan_btn;
 	private ImageView refresh_goods_info;
 	private Button search_btn,submit_btn;
 	private ProgressDialog progressDialog;
 	
-	private String goodsBarcode,deliveryCode,coId,coName;
+	private String goodsBarcode,deliveryCode,coId,coName,damageMemo;
 	private String count;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTitle("商品入库");
-		setContentView(R.layout.activity_goods_ruku);
+		setTitle("商品报损退货管理");
+		setContentView(R.layout.activity_goods_report_return);
 		init();
 	}
 	
@@ -63,6 +63,7 @@ public class GoodsRukuActivity extends BaseActivity {
 		number_input = (EditText) findViewById(R.id.number_input);
 		delivery_number_input = (EditText) findViewById(R.id.delivery_number_input);
 		service_keyword_input = (EditText) findViewById(R.id.service_keyword_input);
+		damage_memo = (EditText) findViewById(R.id.damage_memo);
 		
 		scan_btn = (ImageButton) findViewById(R.id.scan_btn);
 		search_btn = (Button) findViewById(R.id.search_btn);
@@ -98,7 +99,7 @@ public class GoodsRukuActivity extends BaseActivity {
 				@Override
 				public void onSuccess(int arg0, Header[] arg1, String result) {
 					QueryGoodsInfoResponse mCommonResponse = (QueryGoodsInfoResponse) ResultParse.parseResult(result,QueryGoodsInfoResponse.class);
-					if(ResultParse.handleResutl(GoodsRukuActivity.this, mCommonResponse)){
+					if(ResultParse.handleResutl(GoodsReportOrReturnActivity.this, mCommonResponse)){
 						goods_info_input.setText(mCommonResponse.getGoodsName());
 					}else{
 						goods_info_input.setText("");
@@ -116,6 +117,7 @@ public class GoodsRukuActivity extends BaseActivity {
 		goodsBarcode = goods_code_input.getText().toString().trim();
 		count = number_input.getText().toString().trim();
 		deliveryCode = delivery_number_input.getText().toString().trim();
+		damageMemo = damage_memo.getText().toString().trim();
 		int number = NumberUtil.StringToInt(count);
 		if(TextUtils.isEmpty(goodsBarcode)){
 			ToastUtil.diaplayMesShort(this, "请输入商品条码数字");
@@ -125,12 +127,16 @@ public class GoodsRukuActivity extends BaseActivity {
 			ToastUtil.diaplayMesShort(this, "请输入配送单号");
 			isvalid = false;
 		}
+		if(TextUtils.isEmpty(damageMemo)){
+			ToastUtil.diaplayMesShort(this, "请输入报损退货说明");
+			isvalid = false;
+		}
 		if(TextUtils.isEmpty(coId)){
 			ToastUtil.diaplayMesShort(this, "请输入服务提供商");
 			isvalid = false;
 		}
 		if(number < 1){
-			ToastUtil.diaplayMesShort(this, "入库数量必须大于0");
+			ToastUtil.diaplayMesShort(this, "报损数量必须大于0");
 			isvalid = false;
 		}
 		
@@ -145,18 +151,19 @@ public class GoodsRukuActivity extends BaseActivity {
 			params.put("count", count);
 			params.put("deliveryId", deliveryCode);
 			params.put("coId", coId);
-			RoboHttpClient.post(HttpParameter.goodUrl,"goodsInStorage", params, new TextHttpResponseHandler(){
+			params.put("damageMemo", damageMemo);
+			RoboHttpClient.post(HttpParameter.goodUrl,"goodsDamageStorage", params, new TextHttpResponseHandler(){
 
 				@Override
 				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
-					ToastUtil.diaplayMesLong(GoodsRukuActivity.this, "连接失败，请重试！");
+					ToastUtil.diaplayMesLong(GoodsReportOrReturnActivity.this, "连接失败，请重试！");
 				}
 
 				@Override
 				public void onSuccess(int arg0, Header[] arg1, String result) {
 					CommonResponse mCommonResponse = ResultParse.parseResult(result,CommonResponse.class);
-					if(ResultParse.handleResutl(GoodsRukuActivity.this, mCommonResponse)){
-						ToastUtil.diaplayMesShort(GoodsRukuActivity.this, "入库成功");
+					if(ResultParse.handleResutl(GoodsReportOrReturnActivity.this, mCommonResponse)){
+						ToastUtil.diaplayMesShort(GoodsReportOrReturnActivity.this, "报损成功");
 					}
 				}
 				
@@ -187,17 +194,17 @@ public class GoodsRukuActivity extends BaseActivity {
 
 				@Override
 				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
-					ToastUtil.diaplayMesShort(GoodsRukuActivity.this, "连接失败，请重试！");
+					ToastUtil.diaplayMesShort(GoodsReportOrReturnActivity.this, "连接失败，请重试！");
 				}
 
 				@Override
 				public void onSuccess(int arg0, Header[] arg1, String result) {
 					QueryCoInfoResponse mCommonResponse = (QueryCoInfoResponse) ResultParse.parseResult(result,QueryCoInfoResponse.class);
-					if(ResultParse.handleResutl(GoodsRukuActivity.this, mCommonResponse)){
+					if(ResultParse.handleResutl(GoodsReportOrReturnActivity.this, mCommonResponse)){
 						if(mCommonResponse.getList().size() > 0){
 							showSupplierDialog(mCommonResponse.getList());
 						}else{
-							ToastUtil.diaplayMesShort(GoodsRukuActivity.this, "没有相关信息，请重试");
+							ToastUtil.diaplayMesShort(GoodsReportOrReturnActivity.this, "没有相关信息，请重试");
 						}
 					}
 				}

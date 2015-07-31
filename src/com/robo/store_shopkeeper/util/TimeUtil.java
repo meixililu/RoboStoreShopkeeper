@@ -19,6 +19,8 @@ public class TimeUtil {
 	public static final String TimeFormat = "HH:mm:ss";
 	public static final String MinuteFormat = "HH:mm";
 	public static final String MonthFormat = "MM-dd";
+	public static final String MonthFormat2 = "M月d日";
+	public static final String DayYearFormat = "HH:mm:ss MM-dd";
 	public static final String MonthMinuteFormat = "MM-dd HH:mm";
 	
 	/**
