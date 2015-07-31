@@ -1,8 +1,8 @@
 package com.robo.store_shopkeeper.dao;
 
-
 public class GetShopInfoResponse extends CommonResponse {
 	private String shopId; // 店铺ID
+	private String shopName; // 店铺名称
 	private String memo; // 店铺简介
 	private String longitude; // 经度
 	private String latitude; // 纬度
@@ -10,10 +10,14 @@ public class GetShopInfoResponse extends CommonResponse {
 	private String linkMobile; // 联系电话
 	private String sosMan; // 紧急联系人
 	private String sosTel; // 紧急联系电话
+	private String coId; // 服务提供商编码
+	private String coName; // 服务提供商名称
 	private String businessNO; // 营业执照
 	private String opendate; // 开店时间 yyyy-MM-dd
 	private String provinceId; // 省份Id
+	private String provinceName; // 省份名称
 	private String cityId; // 城市Id
+	private String cityName; // 城市名称
 	private String address; // 详细地址
 
 	public String getShopId() {
@@ -22,6 +26,14 @@ public class GetShopInfoResponse extends CommonResponse {
 
 	public void setShopId(String shopId) {
 		this.shopId = shopId;
+	}
+
+	public String getShopName() {
+		return shopName;
+	}
+
+	public void setShopName(String shopName) {
+		this.shopName = shopName;
 	}
 
 	public String getMemo() {
@@ -80,6 +92,22 @@ public class GetShopInfoResponse extends CommonResponse {
 		this.sosTel = sosTel;
 	}
 
+	public String getCoId() {
+		return coId;
+	}
+
+	public void setCoId(String coId) {
+		this.coId = coId;
+	}
+
+	public String getCoName() {
+		return coName;
+	}
+
+	public void setCoName(String coName) {
+		this.coName = coName;
+	}
+
 	public String getBusinessNO() {
 		return businessNO;
 	}
@@ -104,12 +132,28 @@ public class GetShopInfoResponse extends CommonResponse {
 		this.provinceId = provinceId;
 	}
 
+	public String getProvinceName() {
+		return provinceName;
+	}
+
+	public void setProvinceName(String provinceName) {
+		this.provinceName = provinceName;
+	}
+
 	public String getCityId() {
 		return cityId;
 	}
 
 	public void setCityId(String cityId) {
 		this.cityId = cityId;
+	}
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
 	}
 
 	public String getAddress() {

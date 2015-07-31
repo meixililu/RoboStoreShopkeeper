@@ -1,5 +1,7 @@
 package com.robo.store_shopkeeper;
 
+import com.robo.store_shopkeeper.util.KeyUtil;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -29,11 +31,16 @@ public class TradeManagerActivity extends BaseActivity implements View.OnClickLi
 	public void onClick(View v) {
 		super.onClick(v);
 		switch(v.getId()){
+		//0线下/1线上
 		case R.id.sell_machine_order_cover:
-			toActivity(GoodsRukuActivity.class, null);
+			Bundle bundle = new Bundle();
+			bundle.putString(KeyUtil.OnlineOffLineKey, "0");
+			toActivity(SellMachineTradeOrdersActivity.class, bundle);
 			break;
 		case R.id.online_order_cover:
-			toActivity(GoodsRukuActivity.class, null);
+			Bundle bundle1 = new Bundle();
+			bundle1.putString(KeyUtil.OnlineOffLineKey, "1");
+			toActivity(SellMachineTradeOrdersActivity.class, bundle1);
 			break;
 		case R.id.shop_sell_sum_cover:
 			toActivity(GoodsRukuActivity.class, null);

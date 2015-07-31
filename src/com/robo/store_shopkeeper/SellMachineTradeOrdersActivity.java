@@ -18,49 +18,62 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.robo.store_shopkeeper.adapter.CashOrderListAdapter;
-import com.robo.store_shopkeeper.dao.GetCashOrderListResponse;
-import com.robo.store_shopkeeper.dao.GetCashOrderListVo;
+import com.robo.store_shopkeeper.adapter.SellMachineTradeOrderListAdapter;
+import com.robo.store_shopkeeper.dao.GetAllOrdersResponse;
+import com.robo.store_shopkeeper.dao.GetAllOrdersVo;
 import com.robo.store_shopkeeper.dialog.CashOrderMenuDialog;
 import com.robo.store_shopkeeper.dialog.CashOrderMenuDialog.onButtonClick;
 import com.robo.store_shopkeeper.http.HttpParameter;
 import com.robo.store_shopkeeper.http.RoboHttpClient;
 import com.robo.store_shopkeeper.http.TextHttpResponseHandler;
+import com.robo.store_shopkeeper.util.KeyUtil;
 import com.robo.store_shopkeeper.util.LogUtil;
 import com.robo.store_shopkeeper.util.ResultParse;
 import com.robo.store_shopkeeper.util.Settings;
 import com.robo.store_shopkeeper.util.ToastUtil;
 
-public class CashOrderListActivity extends BaseActivity implements OnClickListener{
+public class SellMachineTradeOrdersActivity extends BaseActivity implements OnClickListener{
 
 	private LayoutInflater inflater;
 	private ListView mListView;
 	private TextView search_type_btn;
-	private CashOrderListAdapter mCashOrderListAdapter;
-	private List<GetCashOrderListVo> list;
+	private SellMachineTradeOrderListAdapter mCashOrderListAdapter;
+	private List<GetAllOrdersVo> list;
 	
 	private View footerView;
 	private LinearLayout load_more_data;
 	private TextView no_more_data;
-	private String checkOutStatus = "9";
 	public int pageIndex = 0;
 	private boolean isLoadMoreData;
 	private boolean isFinishloadData = true;
+	private String type;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		initTitle();
 		setContentView(R.layout.activity_cash_order_list);
 		init();
 		RequestData();
 	}
 	
+	private void initTitle(){
+		Bundle bundle1 = getIntent().getBundleExtra(KeyUtil.BundleKey);
+		type = bundle1.getString(KeyUtil.OnlineOffLineKey);
+		if(type.equals("0")){
+			setTitle("线下交易订单");
+		}else{
+			setTitle("线上交易订单");
+		}
+	}
+	
 	private void init(){
 		inflater = LayoutInflater.from(this);
-		list = new ArrayList<GetCashOrderListVo>();
-		mCashOrderListAdapter = new CashOrderListAdapter(this, inflater, list);
+		list = new ArrayList<GetAllOrdersVo>();
+		mCashOrderListAdapter = new SellMachineTradeOrderListAdapter(this, inflater, list);
 		initSwipeRefresh();
 		search_type_btn = (TextView) findViewById(R.id.search_type_btn);
+		search_type_btn.setVisibility(View.GONE);;
 		mListView = (ListView) findViewById(R.id.content_lv);
 		
 		footerView = inflater.inflate(R.layout.list_footer_view, null);
@@ -72,7 +85,6 @@ public class CashOrderListActivity extends BaseActivity implements OnClickListen
 		setListOnScrollListener();
 		mListView.setAdapter(mCashOrderListAdapter);
 		
-		search_type_btn.setOnClickListener(this);
 	}
 	
 	public void setListOnScrollListener(){
@@ -116,20 +128,21 @@ public class CashOrderListActivity extends BaseActivity implements OnClickListen
 				showProgressbar();
 			}
 			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("checkOutStatus", checkOutStatus);
-			params.put("pageIndex", pageIndex);
-			params.put("pageCount", Settings.pageCount);
-			RoboHttpClient.post(HttpParameter.orderUrl,"getCashOrderList", params, new TextHttpResponseHandler(){
+			params.put("shopId", "");
+			params.put("flag", type);//0线下/1线上
+//			params.put("pageIndex", pageIndex);
+//			params.put("pageCount", Settings.pageCount);
+			RoboHttpClient.post(HttpParameter.orderUrl,"getAllOrders", params, new TextHttpResponseHandler(){
 				
 				@Override
 				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
-					ToastUtil.diaplayMesLong(CashOrderListActivity.this, CashOrderListActivity.this.getResources().getString(R.string.connet_fail));
+					ToastUtil.diaplayMesLong(SellMachineTradeOrdersActivity.this, SellMachineTradeOrdersActivity.this.getResources().getString(R.string.connet_fail));
 				}
 				
 				@Override
 				public void onSuccess(int arg0, Header[] arg1, String result) {
-					GetCashOrderListResponse mResponse = (GetCashOrderListResponse) ResultParse.parseResult(result,GetCashOrderListResponse.class);
-					if(ResultParse.handleResutl(CashOrderListActivity.this, mResponse)){
+					GetAllOrdersResponse mResponse = (GetAllOrdersResponse) ResultParse.parseResult(result,GetAllOrdersResponse.class);
+					if(ResultParse.handleResutl(SellMachineTradeOrdersActivity.this, mResponse)){
 						list.addAll(mResponse.getList());
 						if(list.size() > 0){
 							if(list.size() < Settings.pageCount && pageIndex == 0){
@@ -170,35 +183,7 @@ public class CashOrderListActivity extends BaseActivity implements OnClickListen
 	@Override
 	public void onClick(View v) {
 		super.onClick(v);
-		switch(v.getId()){
-		case R.id.search_type_btn:
-			toSearchActivity();
-			break;
-		}
 	}
 	
-	private void toSearchActivity(){
-		CashOrderMenuDialog mDialog = new CashOrderMenuDialog(this);
-		mDialog.setmListener(new onButtonClick() {
-			@Override
-			public void onItemClick(String type) {
-				checkOutStatus = type;
-				if(checkOutStatus.equals("9")){
-					search_type_btn.setText("全部");
-				}else if(checkOutStatus.equals("0")){
-					search_type_btn.setText("未付款");
-				}else if(checkOutStatus.equals("1")){
-					search_type_btn.setText("已付款");
-				}
-				onSwipeRefreshLayoutRefresh();
-			}
-		});
-		WindowManager windowManager = getWindowManager();
-		Display display = windowManager.getDefaultDisplay();
-		WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
-		lp.width = (int)(display.getWidth()); //设置宽度
-		mDialog.getWindow().setAttributes(lp);
-		mDialog.show();
-	}
 	
 }

@@ -140,7 +140,7 @@ public class UserFragment extends BaseFragment implements OnClickListener{
 	private void toOrderListActivity(int type){
 		Bundle mBundle = new Bundle();
 		mBundle.putInt(KeyUtil.OrderTypeKey, type);
-		toActivity(CheckAllOrdersActivity.class, mBundle);
+//		toActivity(CheckAllOrdersActivity.class, mBundle);
 	}
 	
 	private void loginout(){

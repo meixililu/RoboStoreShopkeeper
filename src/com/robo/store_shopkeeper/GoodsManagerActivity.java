@@ -34,6 +34,9 @@ public class GoodsManagerActivity extends BaseActivity implements View.OnClickLi
 		case R.id.ruku_cover:
 			toActivity(GoodsRukuActivity.class, null);
 			break;
+		case R.id.cancle_cover:
+			toActivity(GoodsRevokeActivity.class, null);
+			break;
 		case R.id.kuchun_check_cover:
 			toActivity(StockListActivity.class, null);
 			break;

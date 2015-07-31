@@ -7,85 +7,72 @@ import java.util.List;
 import org.apache.http.Header;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.robo.store_shopkeeper.adapter.CheckAllOrderListAdapter;
-import com.robo.store_shopkeeper.dao.GetAllOrderResponse;
-import com.robo.store_shopkeeper.dao.GetOrdersListResponse;
-import com.robo.store_shopkeeper.dao.OrderGoods;
+import com.robo.store_shopkeeper.adapter.GoodsRevokeListAdapter;
+import com.robo.store_shopkeeper.dao.GetUndoListResponse;
+import com.robo.store_shopkeeper.dao.GetUndoListVo;
+import com.robo.store_shopkeeper.dialog.GoodsRevokeMenuDialog;
+import com.robo.store_shopkeeper.dialog.GoodsRevokeMenuDialog.onButtonClick;
 import com.robo.store_shopkeeper.http.HttpParameter;
 import com.robo.store_shopkeeper.http.RoboHttpClient;
 import com.robo.store_shopkeeper.http.TextHttpResponseHandler;
-import com.robo.store_shopkeeper.util.KeyUtil;
 import com.robo.store_shopkeeper.util.LogUtil;
 import com.robo.store_shopkeeper.util.ResultParse;
 import com.robo.store_shopkeeper.util.Settings;
 import com.robo.store_shopkeeper.util.ToastUtil;
 
-public class CheckAllOrdersActivity extends BaseActivity implements OnClickListener{
+public class GoodsRevokeActivity extends BaseActivity implements OnClickListener{
 
-	//（订单状态：“1.待付款”，“2.订单取消”，“3.待取货”，“4.退款处理中”，“5.已退款，交易关闭”，“6.交易完成”6种状态）
-	private SwipeRefreshLayout mswiperefreshlayout;
+	private LayoutInflater inflater;
 	private ListView mListView;
+	private TextView search_type_btn;
+	private GoodsRevokeListAdapter mCashOrderListAdapter;
+	private List<GetUndoListVo> list;
+	
 	private View footerView;
 	private LinearLayout load_more_data;
 	private TextView no_more_data;
-	private LayoutInflater inflater;
-	
-	private CheckAllOrderListAdapter mCheckAllOrderListAdapter;
-	private List<GetOrdersListResponse> ordersList;
-	
-	private int OrderType;
-	public int pageIndex;
+	private String undoStatus = "9";
+	public int pageIndex = 0;
 	private boolean isLoadMoreData;
 	private boolean isFinishloadData = true;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTitle();
-		setContentView(R.layout.activity_check_all_orders);
+		setContentView(R.layout.activity_goods_revoke);
 		init();
 		RequestData();
 	}
 	
-	private void setTitle(){
-		Bundle mBundle = getIntent().getBundleExtra(KeyUtil.BundleKey);
-		if(mBundle != null){
-			OrderType = mBundle.getInt(KeyUtil.OrderTypeKey,0);
-		}
-		if(OrderType == 0){
-			setTitle(getResources().getString(R.string.check_all_orders));
-		}else if(OrderType == 1){
-			setTitle(getResources().getString(R.string.obligantion));
-		}else if(OrderType == 3){
-			setTitle(getResources().getString(R.string.to_pick_up));
-		}else if(OrderType == 4){
-			setTitle(getResources().getString(R.string.refunding_list));
-		}
-	}
-	
 	private void init(){
 		inflater = LayoutInflater.from(this);
+		list = new ArrayList<GetUndoListVo>();
+		mCashOrderListAdapter = new GoodsRevokeListAdapter(this, inflater, list);
 		initSwipeRefresh();
+		search_type_btn = (TextView) findViewById(R.id.search_type_btn);
 		mListView = (ListView) findViewById(R.id.content_lv);
+		
 		footerView = inflater.inflate(R.layout.list_footer_view, null);
 		load_more_data = (LinearLayout) footerView.findViewById(R.id.load_more_data);
 		no_more_data = (TextView) footerView.findViewById(R.id.no_more_data);
 		footerView.setVisibility(View.GONE);
 		mListView.addFooterView(footerView);
+		
 		setListOnScrollListener();
-		ordersList = new ArrayList<GetOrdersListResponse>();
-		mCheckAllOrderListAdapter = new CheckAllOrderListAdapter(this, inflater, ordersList);
-		mListView.setAdapter(mCheckAllOrderListAdapter);
+		mListView.setAdapter(mCashOrderListAdapter);
+		
+		search_type_btn.setOnClickListener(this);
 	}
 	
 	public void setListOnScrollListener(){
@@ -93,7 +80,7 @@ public class CheckAllOrdersActivity extends BaseActivity implements OnClickListe
             private int lastItemIndex;
             @Override  
             public void onScrollStateChanged(AbsListView view, int scrollState) { 
-                if (scrollState == OnScrollListener.SCROLL_STATE_IDLE && lastItemIndex == mCheckAllOrderListAdapter.getCount() - 1) {  
+                if (scrollState == OnScrollListener.SCROLL_STATE_IDLE && lastItemIndex == mCashOrderListAdapter.getCount() - 1) {  
                 	LogUtil.DefalutLog("onScrollStateChanged---update");
             		if(isLoadMoreData){
             			RequestData();
@@ -114,39 +101,38 @@ public class CheckAllOrdersActivity extends BaseActivity implements OnClickListe
 	
 	public void clearList(){
 		pageIndex = 0;
+		list.clear();
 		footerView.setVisibility(View.GONE);
+		mCashOrderListAdapter.notifyDataSetChanged();
 		load_more_data.setVisibility(View.VISIBLE);
 		no_more_data.setVisibility(View.GONE);
-		ordersList.clear();
-		mCheckAllOrderListAdapter.notifyDataSetChanged();
 	}
 	
 	private void RequestData(){
 		if(isFinishloadData){
+			hideEmptyLayout();
 			isFinishloadData = false;
 			if(pageIndex == 0){
-				mProgressbar.setVisibility(View.VISIBLE);
+				showProgressbar();
 			}
 			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("type", OrderType);
+			params.put("undoStatus", undoStatus);
 			params.put("pageIndex", pageIndex);
 			params.put("pageCount", Settings.pageCount);
-			RoboHttpClient.post(HttpParameter.orderUrl,"getOrdersList", params, new TextHttpResponseHandler(){
+			RoboHttpClient.post(HttpParameter.goodUrl,"getUndoList", params, new TextHttpResponseHandler(){
 				
 				@Override
 				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
-					ToastUtil.diaplayMesLong(CheckAllOrdersActivity.this, CheckAllOrdersActivity.this.getResources().getString(R.string.connet_fail));
+					ToastUtil.diaplayMesLong(GoodsRevokeActivity.this, GoodsRevokeActivity.this.getResources().getString(R.string.connet_fail));
 				}
 				
 				@Override
 				public void onSuccess(int arg0, Header[] arg1, String result) {
-					GetAllOrderResponse mListResponse = (GetAllOrderResponse) ResultParse.parseResult(result,GetAllOrderResponse.class);
-					if(ResultParse.handleResutl(CheckAllOrdersActivity.this, mListResponse)){
-						List<GetOrdersListResponse> mOrderList = mListResponse.getOrderList();
-						if(mOrderList.size() > 0){
-							ordersList.addAll(mOrderList);
-							mCheckAllOrderListAdapter.notifyDataSetChanged();
-							if(mOrderList.size() < Settings.pageCount && pageIndex == 0){
+					GetUndoListResponse mResponse = (GetUndoListResponse) ResultParse.parseResult(result,GetUndoListResponse.class);
+					if(ResultParse.handleResutl(GoodsRevokeActivity.this, mResponse)){
+						list.addAll(mResponse.getList());
+						if(list.size() > 0){
+							if(list.size() < Settings.pageCount && pageIndex == 0){
 								isLoadMoreData = false;
 								mListView.removeFooterView(footerView);
 							}else{
@@ -156,11 +142,11 @@ public class CheckAllOrdersActivity extends BaseActivity implements OnClickListe
 							}
 						}else{
 							showEmptyLayout_Empty();
-							empty_layout.setText(CheckAllOrdersActivity.this.getResources().getString(R.string.order_list_empty));
 							isLoadMoreData = false;
 							load_more_data.setVisibility(View.GONE);
 							no_more_data.setVisibility(View.VISIBLE);
 						}
+						mCashOrderListAdapter.notifyDataSetChanged();
 					}else{
 						mListView.removeFooterView(footerView);
 					}
@@ -169,17 +155,50 @@ public class CheckAllOrdersActivity extends BaseActivity implements OnClickListe
 				@Override
 				public void onFinish() {
 					isFinishloadData = true;
-					mSwipeRefreshLayout.setRefreshing(false);
-					mProgressbar.setVisibility(View.GONE);
+					onSwipeRefreshLayoutFinish();
+					hideProgressbar();
 				}
 			});
 		}
 	}
 	
 	@Override
-	public void onClick(View v) {
-		super.onClick(v);
+	public void onClickEmptyLayoutRefresh() {
+		onSwipeRefreshLayoutRefresh();
 	}
 	
+	@Override
+	public void onClick(View v) {
+		super.onClick(v);
+		switch(v.getId()){
+		case R.id.search_type_btn:
+			toSearchActivity();
+			break;
+		}
+	}
+	
+	private void toSearchActivity(){
+		GoodsRevokeMenuDialog mDialog = new GoodsRevokeMenuDialog(this);
+		mDialog.setmListener(new onButtonClick() {
+			@Override
+			public void onItemClick(String type) {
+				undoStatus = type;
+				if(undoStatus.equals("9")){
+					search_type_btn.setText("全部");
+				}else if(undoStatus.equals("0")){
+					search_type_btn.setText("未撤回");
+				}else if(undoStatus.equals("1")){
+					search_type_btn.setText("已撤回");
+				}
+				onSwipeRefreshLayoutRefresh();
+			}
+		});
+		WindowManager windowManager = getWindowManager();
+		Display display = windowManager.getDefaultDisplay();
+		WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
+		lp.width = (int)(display.getWidth()); //设置宽度
+		mDialog.getWindow().setAttributes(lp);
+		mDialog.show();
+	}
 	
 }

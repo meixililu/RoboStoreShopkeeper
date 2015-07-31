@@ -235,7 +235,7 @@ public class GoodsReportOrReturnActivity extends BaseActivity {
 		super.onClick(v);
 		switch(v.getId()){
 		case R.id.history_btn:
-			toActivity(RukuHistoryActivity.class, null);
+			toActivity(ReportHistoryListActivity.class, null);
 			break;
 		case R.id.refresh_goods_info:
 			RequestGoodInfoData();

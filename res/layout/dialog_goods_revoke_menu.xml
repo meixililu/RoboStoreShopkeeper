@@ -25,7 +25,7 @@
         android:layout_marginTop="@dimen/padding_15"
         android:background="@drawable/btn_login_selector"
         android:textColor="@drawable/text_white_to_gray_selector"
-        android:text="未付款"
+        android:text="未撤回"
         android:textSize="@dimen/big"
         />
     <Button 
@@ -35,7 +35,7 @@
         android:layout_marginTop="@dimen/padding_15"
         android:background="@drawable/btn_login_selector"
         android:textColor="@drawable/text_white_to_gray_selector"
-        android:text="已付款"
+        android:text="已撤回"
         android:textSize="@dimen/big"
         />
 </LinearLayout>

@@ -1,8 +1,9 @@
 package com.robo.store_shopkeeper.dao;
 
+
 public class UpdateShopInfoRequest extends CommonRequest {
 	private String shopId; // 店铺ID
-	private String shopName; // 店铺名称
+	// private String shopName; // 店铺名称
 	private String memo; // 店铺简介
 	private String longitude; // 经度
 	private String latitude; // 纬度
@@ -10,12 +11,12 @@ public class UpdateShopInfoRequest extends CommonRequest {
 	private String linkMobile; // 联系电话
 	private String sosMan; // 紧急联系人
 	private String sosTel; // 紧急联系电话
-	private String businessNO; // 营业执照
-	private String opendate; // 开店时间 yyyy-MM-dd
-	private String provinceId; // 省份Id
-	private String provinceName; // 省份名称
-	private String cityId; // 城市Id
-	private String cityName; // 城市名称
+	// private String businessNO; // 营业执照
+	// private String opendate; // 开店时间 yyyy-MM-dd
+	// private String provinceId; // 省份Id
+	// private String provinceName; // 省份名称
+	// private String cityId; // 城市Id
+	// private String cityName; // 城市名称
 	private String address; // 详细地址
 
 	public String getShopId() {
@@ -24,14 +25,6 @@ public class UpdateShopInfoRequest extends CommonRequest {
 
 	public void setShopId(String shopId) {
 		this.shopId = shopId;
-	}
-
-	public String getShopName() {
-		return shopName;
-	}
-
-	public void setShopName(String shopName) {
-		this.shopName = shopName;
 	}
 
 	public String getMemo() {
@@ -90,59 +83,11 @@ public class UpdateShopInfoRequest extends CommonRequest {
 		this.sosTel = sosTel;
 	}
 
-	public String getBusinessNO() {
-		return businessNO;
-	}
-
-	public void setBusinessNO(String businessNO) {
-		this.businessNO = businessNO;
-	}
-
-	public String getOpendate() {
-		return opendate;
-	}
-
-	public void setOpendate(String opendate) {
-		this.opendate = opendate;
-	}
-
-	public String getProvinceId() {
-		return provinceId;
-	}
-
-	public void setProvinceId(String provinceId) {
-		this.provinceId = provinceId;
-	}
-
-	public String getCityId() {
-		return cityId;
-	}
-
-	public void setCityId(String cityId) {
-		this.cityId = cityId;
-	}
-
 	public String getAddress() {
 		return address;
 	}
 
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public String getProvinceName() {
-		return provinceName;
-	}
-
-	public void setProvinceName(String provinceName) {
-		this.provinceName = provinceName;
-	}
-
-	public String getCityName() {
-		return cityName;
-	}
-
-	public void setCityName(String cityName) {
-		this.cityName = cityName;
 	}
 }

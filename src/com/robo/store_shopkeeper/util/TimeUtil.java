@@ -196,4 +196,32 @@ public class TimeUtil {
 		}
 		return d;
 	}
+	
+	public static String compareDate(String endDate){
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try{
+		    Date d1 = df.parse(endDate);
+		    Date d2 = new Date();
+		    long diff = d2.getTime() - d1.getTime();
+		    long days = diff/(24*60*60*1000);
+		    long hour = (diff/(60*60*1000)-days*24);
+		    long min = ((diff/(60*1000))-days*24*60-hour*60);
+		    long s = (diff/1000-days*24*60*60-hour*60*60-min*60);
+		    if(days > 3){
+		    	return sdf.format(d1);
+		    }else if(days > 0){
+		    	return days +  "天前";
+		    }else if(hour > 0){
+		    	return hour +  "小时前";
+		    }else if(min > 0){
+		    	return min +  "分钟前";
+		    }else if(s > 0){
+		    	return s +  "秒前";
+		    }
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		return "";
+	}
 }

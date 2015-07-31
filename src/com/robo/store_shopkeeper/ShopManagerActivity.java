@@ -131,15 +131,8 @@ public class ShopManagerActivity extends BaseActivity implements View.OnClickLis
 			showProgressbar();
 			HashMap<String, String> params = new HashMap<String, String>();
 			params.put("shopId", mGetShopInfoResponse.getShopId());
-//		params.put("shopName", mGetShopInfoResponse.get);
 			params.put("memo", mGetShopInfoResponse.getMemo());
 			params.put("address", mGetShopInfoResponse.getAddress());
-			params.put("cityId", mGetShopInfoResponse.getCityId());
-//		params.put("cityName", mGetShopInfoResponse.getc);
-			params.put("provinceId", mGetShopInfoResponse.getProvinceId());
-//		params.put("provinceName", "");
-			params.put("opendate", mGetShopInfoResponse.getOpendate());
-			params.put("businessNO", mGetShopInfoResponse.getBusinessNO());
 			params.put("sosTel", mGetShopInfoResponse.getSosTel());
 			params.put("sosMan", mGetShopInfoResponse.getSosMan());
 			params.put("linkMan", mGetShopInfoResponse.getLinkMan());

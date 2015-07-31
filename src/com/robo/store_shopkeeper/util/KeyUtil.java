@@ -45,6 +45,7 @@ public class KeyUtil {
 	
 	public static final String ShopMemoKey = "ShopMemoKey";
 	
+	public static final String OnlineOffLineKey = "OnlineOffLineKey";
 	
 	
 	
