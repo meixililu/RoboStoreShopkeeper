@@ -28,10 +28,10 @@ public class BillManagerActivity extends BaseActivity implements View.OnClickLis
 		super.onClick(v);
 		switch(v.getId()){
 		case R.id.per_month_income_cover:
-			toActivity(GoodsRukuActivity.class, null);
+			toActivity(PerMonthIncomeActivity.class, null);
 			break;
 		case R.id.per_month_expend_cover:
-			toActivity(GoodsRukuActivity.class, null);
+			toActivity(ServiceChargeActivity.class, null);
 			break;
 		}
 	}

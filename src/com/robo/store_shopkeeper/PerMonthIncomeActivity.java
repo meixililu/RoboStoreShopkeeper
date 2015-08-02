@@ -7,73 +7,54 @@ import java.util.List;
 import org.apache.http.Header;
 
 import android.os.Bundle;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.robo.store_shopkeeper.adapter.SellMachineTradeOrderListAdapter;
-import com.robo.store_shopkeeper.dao.GetAllOrdersResponse;
-import com.robo.store_shopkeeper.dao.GetAllOrdersVo;
-import com.robo.store_shopkeeper.dialog.CashOrderMenuDialog;
-import com.robo.store_shopkeeper.dialog.CashOrderMenuDialog.onButtonClick;
+import com.robo.store_shopkeeper.adapter.PerMonthIncomeListAdapter;
+import com.robo.store_shopkeeper.dao.GetRadioResponse;
+import com.robo.store_shopkeeper.dao.GetRadioVo;
 import com.robo.store_shopkeeper.http.HttpParameter;
 import com.robo.store_shopkeeper.http.RoboHttpClient;
 import com.robo.store_shopkeeper.http.TextHttpResponseHandler;
-import com.robo.store_shopkeeper.util.KeyUtil;
 import com.robo.store_shopkeeper.util.LogUtil;
 import com.robo.store_shopkeeper.util.ResultParse;
 import com.robo.store_shopkeeper.util.Settings;
 import com.robo.store_shopkeeper.util.ToastUtil;
 
-public class SellMachineTradeOrdersActivity extends BaseActivity implements OnClickListener{
+public class PerMonthIncomeActivity extends BaseActivity implements OnClickListener{
 
 	private LayoutInflater inflater;
 	private ListView mListView;
-	private TextView search_type_btn;
-	private SellMachineTradeOrderListAdapter mCashOrderListAdapter;
-	private List<GetAllOrdersVo> list;
+	private PerMonthIncomeListAdapter mCashOrderListAdapter;
+	private List<GetRadioVo> list;
 	
 	private View footerView;
 	private LinearLayout load_more_data;
 	private TextView no_more_data;
+	private String checkOutStatus = "9";
 	public int pageIndex = 0;
 	private boolean isLoadMoreData;
 	private boolean isFinishloadData = true;
-	private String type;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		initTitle();
-		setContentView(R.layout.activity_cash_order_list);
+		setContentView(R.layout.activity_per_month_income);
 		init();
 		RequestData();
 	}
 	
-	private void initTitle(){
-		Bundle bundle1 = getIntent().getBundleExtra(KeyUtil.BundleKey);
-		type = bundle1.getString(KeyUtil.OnlineOffLineKey);
-		if(type.equals("0")){
-			setTitle("售货机交易订单");
-		}else{
-			setTitle("线上交易取货单");
-		}
-	}
-	
 	private void init(){
 		inflater = LayoutInflater.from(this);
-		list = new ArrayList<GetAllOrdersVo>();
-		mCashOrderListAdapter = new SellMachineTradeOrderListAdapter(this, inflater, list, type);
+		list = new ArrayList<GetRadioVo>();
+		mCashOrderListAdapter = new PerMonthIncomeListAdapter(this, inflater, list);
 		initSwipeRefresh();
-		search_type_btn = (TextView) findViewById(R.id.search_type_btn);
-		search_type_btn.setVisibility(View.GONE);;
 		mListView = (ListView) findViewById(R.id.content_lv);
 		
 		footerView = inflater.inflate(R.layout.list_footer_view, null);
@@ -84,7 +65,6 @@ public class SellMachineTradeOrdersActivity extends BaseActivity implements OnCl
 		
 		setListOnScrollListener();
 		mListView.setAdapter(mCashOrderListAdapter);
-		
 	}
 	
 	public void setListOnScrollListener(){
@@ -129,20 +109,18 @@ public class SellMachineTradeOrdersActivity extends BaseActivity implements OnCl
 			}
 			HashMap<String, Object> params = new HashMap<String, Object>();
 			params.put("shopId", "");
-			params.put("flag", type);//0线下/1线上
-//			params.put("pageIndex", pageIndex);
-//			params.put("pageCount", Settings.pageCount);
-			RoboHttpClient.post(HttpParameter.orderUrl,"getAllOrders", params, new TextHttpResponseHandler(){
+			params.put("month", "");
+			RoboHttpClient.post(HttpParameter.shopsUrl,"getRadio", params, new TextHttpResponseHandler(){
 				
 				@Override
 				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
-					ToastUtil.diaplayMesLong(SellMachineTradeOrdersActivity.this, SellMachineTradeOrdersActivity.this.getResources().getString(R.string.connet_fail));
+					ToastUtil.diaplayMesLong(PerMonthIncomeActivity.this, PerMonthIncomeActivity.this.getResources().getString(R.string.connet_fail));
 				}
 				
 				@Override
 				public void onSuccess(int arg0, Header[] arg1, String result) {
-					GetAllOrdersResponse mResponse = (GetAllOrdersResponse) ResultParse.parseResult(result,GetAllOrdersResponse.class);
-					if(ResultParse.handleResutl(SellMachineTradeOrdersActivity.this, mResponse)){
+					GetRadioResponse mResponse = (GetRadioResponse) ResultParse.parseResult(result,GetRadioResponse.class);
+					if(ResultParse.handleResutl(PerMonthIncomeActivity.this, mResponse)){
 						list.addAll(mResponse.getList());
 						if(list.size() > 0){
 							if(list.size() < Settings.pageCount && pageIndex == 0){

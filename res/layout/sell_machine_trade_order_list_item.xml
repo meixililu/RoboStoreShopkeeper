@@ -3,6 +3,7 @@
     android:id="@+id/item_cover"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:foreground="@drawable/framelayout_selector"
     android:background="@color/text_tint1" >
 
     <LinearLayout

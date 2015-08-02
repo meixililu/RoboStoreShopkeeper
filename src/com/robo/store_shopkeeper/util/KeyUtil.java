@@ -46,6 +46,14 @@ public class KeyUtil {
 	public static final String ShopMemoKey = "ShopMemoKey";
 	
 	public static final String OnlineOffLineKey = "OnlineOffLineKey";
+
+	public static final String DateTimeKey = "DateTimeKey";
+	
+	public static final String RemindDetailTitleKey = "RemindDetailTitleKey";
+	
+	public static final String RemindDetailContentKey = "RemindDetailContentKey";
+	
+	public static final String RemindDetailTimeKey = "RemindDetailTimeKey";
 	
 	
 	

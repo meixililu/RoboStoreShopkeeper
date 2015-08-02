@@ -13,25 +13,22 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.robo.store_shopkeeper.DailyOrdersActivity;
+import com.robo.store_shopkeeper.BusinessRemindDetailActivity;
 import com.robo.store_shopkeeper.R;
-import com.robo.store_shopkeeper.dao.GetAllOrdersVo;
+import com.robo.store_shopkeeper.dao.GetServiceMsgVo;
 import com.robo.store_shopkeeper.util.KeyUtil;
 import com.robo.store_shopkeeper.util.TimeUtil;
 
-public class SellMachineTradeOrderListAdapter extends BaseAdapter {
+public class BusinessRemindListAdapter extends BaseAdapter {
 
 	private Context context;
 	private LayoutInflater mInflater;
-	private List<GetAllOrdersVo> ordersList;
-	private String flag;
+	private List<GetServiceMsgVo> ordersList;
 	
-	public SellMachineTradeOrderListAdapter(Context mContext,LayoutInflater mInflater,List<GetAllOrdersVo> goodsList,
-			String flag){
+	public BusinessRemindListAdapter(Context mContext,LayoutInflater mInflater,List<GetServiceMsgVo> goodsList){
 		this.context = mContext;
 		this.mInflater = mInflater;
 		this.ordersList = goodsList;
-		this.flag = flag;
 	}
 	
 	@Override
@@ -40,7 +37,7 @@ public class SellMachineTradeOrderListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public GetAllOrdersVo getItem(int position) {
+	public GetServiceMsgVo getItem(int position) {
 		return ordersList.get(position);
 	}
 
@@ -53,45 +50,42 @@ public class SellMachineTradeOrderListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder;
 		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.sell_machine_trade_order_list_item, null);
+			convertView = mInflater.inflate(R.layout.business_remind_list_item, null);
 			holder = new ViewHolder();
 			holder.item_cover = (FrameLayout) convertView.findViewById(R.id.item_cover);
-			holder.date_day = (TextView) convertView.findViewById(R.id.date_day);
-			holder.date_month = (TextView) convertView.findViewById(R.id.date_month);
-			holder.tv_sum = (TextView) convertView.findViewById(R.id.tv_sum);
+			holder.time_tv = (TextView) convertView.findViewById(R.id.time_tv);
+			holder.title_tv = (TextView) convertView.findViewById(R.id.title_tv);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		final GetAllOrdersVo mGoodsBase = ordersList.get(position);
-		holder.date_day.setText(TimeUtil.customFormatDate(mGoodsBase.getDatetime(),TimeUtil.DayFormat,"d")+"日");
-		holder.date_month.setText(TimeUtil.customFormatDate(mGoodsBase.getDatetime(),TimeUtil.DayFormat,"M")+"月");
-		holder.tv_sum.setText("￥" + mGoodsBase.getPrice());
-		
+		final GetServiceMsgVo mGoodsBase = ordersList.get(position);
+		final String showTime = TimeUtil.compareDate(mGoodsBase.getCreateTime());
+		holder.time_tv.setText(showTime);
+		holder.title_tv.setText(mGoodsBase.getMsgType());
 		holder.item_cover.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				toDetailActivity(mGoodsBase.getDatetime());
+				toDetailActivity(mGoodsBase.getMsgType(),mGoodsBase.getMsgContent(),showTime);
 			}
 		});
-		
 		return convertView;
 	}
 	
-	private void toDetailActivity(String datetime){
+	private void toDetailActivity(String title,String content, String time){
 		Bundle bundle = new Bundle();
-		bundle.putString(KeyUtil.DateTimeKey, datetime);
-		bundle.putString(KeyUtil.OnlineOffLineKey, flag);
-		Intent intent = new Intent(context, DailyOrdersActivity.class);
+		bundle.putString(KeyUtil.RemindDetailTitleKey, title);
+		bundle.putString(KeyUtil.RemindDetailContentKey, content);
+		bundle.putString(KeyUtil.RemindDetailTimeKey, time);
+		Intent intent = new Intent(context, BusinessRemindDetailActivity.class);
 		intent.putExtra(KeyUtil.BundleKey, bundle);
 		context.startActivity(intent);
-	}
+	};
 	
 	static class ViewHolder {
-		TextView date_day;
-		TextView date_month;
-		TextView tv_sum;
 		FrameLayout item_cover;
+		TextView time_tv;
+		TextView title_tv;
 	}
 
 }

@@ -153,6 +153,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 			toActivity(BillManagerActivity.class,null);
 			break;
 		case R.id.business_remainder_cover:
+			toActivity(BusinessRemindActivity.class,null);
 			break;
 		case R.id.shop_management_cover:
 			toActivity(ShopManagerActivity.class,null);

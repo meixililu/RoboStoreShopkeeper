@@ -15,6 +15,7 @@ public class TimeUtil {
 	public static final String WeekFormat = "yyyy-MM-dd EEEE";
 	public static final String DayHHMMFormat = "yyyy-MM-dd HH:mm";
 	public static final String DayFormat = "yyyy-MM-dd";
+	public static final String DayFormat1 = "yyyy-MM";
 	public static final String Day2Format = "yyyyMMdd";
 	public static final String TimeFormat = "HH:mm:ss";
 	public static final String MinuteFormat = "HH:mm";

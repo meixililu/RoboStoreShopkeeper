@@ -34,29 +34,28 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="现金结账"
+            android:text="业务提醒"
             android:textColor="@color/white"
             android:textSize="@dimen/bigger" />
 
         <TextView
-                android:id="@+id/search_type_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/padding_10"
-                android:textColor="@drawable/text_white_to_gray_selector"
-                android:textSize="@dimen/middle"
-                android:text="全部"
-                android:gravity="center"
-                android:background="@drawable/bg_menu_btn" />
+            android:id="@+id/search_type_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/padding_10"
+            android:background="@drawable/bg_menu_btn"
+            android:gravity="center"
+            android:text="全部"
+            android:textColor="@drawable/text_white_to_gray_selector"
+            android:textSize="@dimen/middle" />
     </RelativeLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" 
-        >
+        android:layout_height="match_parent" >
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/mswiperefreshlayout"
@@ -70,7 +69,7 @@
                 android:background="@color/none"
                 android:cacheColorHint="@color/none"
                 android:divider="@color/text_tint2"
-                android:dividerHeight="0px"
+                android:dividerHeight="1px"
                 android:fadingEdge="none"
                 android:scrollbars="none" />
         </android.support.v4.widget.SwipeRefreshLayout>
@@ -82,18 +81,17 @@
             android:layout_gravity="center"
             android:background="@color/app_color"
             android:visibility="gone" />
-        
-        <TextView 
+
+        <TextView
             android:id="@+id/empty_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
             android:gravity="center"
+            android:text="暂无数据，轻触屏幕可刷新"
             android:textColor="@color/text_grey"
             android:textSize="@dimen/bigger"
-            android:text="暂无数据，轻触屏幕可刷新"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
     </FrameLayout>
 
 </LinearLayout>

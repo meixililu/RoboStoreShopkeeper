@@ -127,7 +127,7 @@
 				        android:layout_height="wrap_content"
 				        android:textColor="@color/text_dark"
 				        android:textSize="@dimen/bigger"
-				        android:text="线上交易订单"
+				        android:text="线上交易取货单"
 				        />
 					<ImageView 
 					    android:layout_width="13dp"

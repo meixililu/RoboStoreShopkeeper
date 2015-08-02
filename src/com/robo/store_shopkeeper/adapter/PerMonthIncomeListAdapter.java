@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,25 +12,22 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.robo.store_shopkeeper.DailyOrdersActivity;
+import com.robo.store_shopkeeper.GoodsDetailActivity;
 import com.robo.store_shopkeeper.R;
-import com.robo.store_shopkeeper.dao.GetAllOrdersVo;
+import com.robo.store_shopkeeper.dao.GetRadioVo;
 import com.robo.store_shopkeeper.util.KeyUtil;
 import com.robo.store_shopkeeper.util.TimeUtil;
 
-public class SellMachineTradeOrderListAdapter extends BaseAdapter {
+public class PerMonthIncomeListAdapter extends BaseAdapter {
 
 	private Context context;
 	private LayoutInflater mInflater;
-	private List<GetAllOrdersVo> ordersList;
-	private String flag;
+	private List<GetRadioVo> ordersList;
 	
-	public SellMachineTradeOrderListAdapter(Context mContext,LayoutInflater mInflater,List<GetAllOrdersVo> goodsList,
-			String flag){
+	public PerMonthIncomeListAdapter(Context mContext,LayoutInflater mInflater,List<GetRadioVo> goodsList){
 		this.context = mContext;
 		this.mInflater = mInflater;
 		this.ordersList = goodsList;
-		this.flag = flag;
 	}
 	
 	@Override
@@ -40,7 +36,7 @@ public class SellMachineTradeOrderListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public GetAllOrdersVo getItem(int position) {
+	public GetRadioVo getItem(int position) {
 		return ordersList.get(position);
 	}
 
@@ -53,7 +49,7 @@ public class SellMachineTradeOrderListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder;
 		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.sell_machine_trade_order_list_item, null);
+			convertView = mInflater.inflate(R.layout.per_month_income_list_item, null);
 			holder = new ViewHolder();
 			holder.item_cover = (FrameLayout) convertView.findViewById(R.id.item_cover);
 			holder.date_day = (TextView) convertView.findViewById(R.id.date_day);
@@ -63,35 +59,32 @@ public class SellMachineTradeOrderListAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		final GetAllOrdersVo mGoodsBase = ordersList.get(position);
-		holder.date_day.setText(TimeUtil.customFormatDate(mGoodsBase.getDatetime(),TimeUtil.DayFormat,"d")+"日");
-		holder.date_month.setText(TimeUtil.customFormatDate(mGoodsBase.getDatetime(),TimeUtil.DayFormat,"M")+"月");
+		final GetRadioVo mGoodsBase = ordersList.get(position);
+		holder.date_day.setText(TimeUtil.customFormatDate(mGoodsBase.getTime(),TimeUtil.DayFormat1,"M")+"月");
+		holder.date_month.setText(TimeUtil.customFormatDate(mGoodsBase.getTime(),TimeUtil.DayFormat1,"yyyy")+"年");
 		holder.tv_sum.setText("￥" + mGoodsBase.getPrice());
 		
 		holder.item_cover.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				toDetailActivity(mGoodsBase.getDatetime());
+//				toGoodsDetailActivity(mGoodsBase.getGoodsBarcode());
 			}
 		});
 		
 		return convertView;
 	}
 	
-	private void toDetailActivity(String datetime){
-		Bundle bundle = new Bundle();
-		bundle.putString(KeyUtil.DateTimeKey, datetime);
-		bundle.putString(KeyUtil.OnlineOffLineKey, flag);
-		Intent intent = new Intent(context, DailyOrdersActivity.class);
-		intent.putExtra(KeyUtil.BundleKey, bundle);
+	private void toGoodsDetailActivity(String id){
+		Intent intent = new Intent(context, GoodsDetailActivity.class);
+		intent.putExtra(KeyUtil.GoodsIdKey, id);
 		context.startActivity(intent);
 	}
 	
 	static class ViewHolder {
+		FrameLayout item_cover;
 		TextView date_day;
 		TextView date_month;
 		TextView tv_sum;
-		FrameLayout item_cover;
 	}
 
 }
