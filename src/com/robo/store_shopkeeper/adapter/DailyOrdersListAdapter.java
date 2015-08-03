@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,12 +13,10 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.robo.store_shopkeeper.GoodsDetailActivity;
+import com.robo.store_shopkeeper.MachineOrderDetailActivity;
 import com.robo.store_shopkeeper.R;
 import com.robo.store_shopkeeper.dao.GetDailyOrdersVo;
-import com.robo.store_shopkeeper.dao.GetInStrogeListVo;
 import com.robo.store_shopkeeper.util.KeyUtil;
-import com.robo.store_shopkeeper.util.TimeUtil;
 
 public class DailyOrdersListAdapter extends BaseAdapter {
 
@@ -76,16 +75,18 @@ public class DailyOrdersListAdapter extends BaseAdapter {
 		holder.ruku_cover.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				toGoodsDetailActivity(mGoodsBase.getGoodsBarcode());
+				toDetailActivity(mGoodsBase.getPickupId());
 			}
 		});
 		
 		return convertView;
 	}
 	
-	private void toGoodsDetailActivity(String id){
-		Intent intent = new Intent(context, GoodsDetailActivity.class);
-		intent.putExtra(KeyUtil.GoodsIdKey, id);
+	private void toDetailActivity(String id){
+		Bundle bundle = new Bundle();
+		bundle.putString(KeyUtil.PickupIdKey, id);
+		Intent intent = new Intent(context, MachineOrderDetailActivity.class);
+		intent.putExtra(KeyUtil.BundleKey, bundle);
 		context.startActivity(intent);
 	}
 	

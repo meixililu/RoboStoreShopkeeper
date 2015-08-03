@@ -55,8 +55,13 @@ public class KeyUtil {
 	
 	public static final String RemindDetailTimeKey = "RemindDetailTimeKey";
 	
+	public static final String InStorageIdKey = "InStorageIdKey";
 	
+	public static final String MachineIdKey = "MachineIdKey";
 	
+	public static final String PickupIdKey = "PickupIdKey";
+	
+	public static final String MonthKey = "MonthKey";
 	
 	
 	

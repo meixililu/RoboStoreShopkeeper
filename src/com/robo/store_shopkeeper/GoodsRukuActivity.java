@@ -175,6 +175,11 @@ public class GoodsRukuActivity extends BaseActivity {
 			ToastUtil.diaplayMesShort(this, "请输入服务提供商");
 			isvalid = false;
 		}
+		goodsBarcode = goods_code_input.getText().toString().trim();
+		if(TextUtils.isEmpty(goodsBarcode)){
+			ToastUtil.diaplayMesShort(this, "请输入商品条码数字");
+			isvalid = false;
+		}
 		return isvalid;
 	}
 	
@@ -182,6 +187,7 @@ public class GoodsRukuActivity extends BaseActivity {
 		if(validFuFuData()){
 			final ProgressDialog progressDialog = ProgressDialog.show(this, "", "正在加载...", true, false);
 			HashMap<String, String> params = new HashMap<String, String>();
+			params.put("goodsBarcode", goodsBarcode);
 			params.put("coName", UnicodeToStr.toUnicode(coName));
 			RoboHttpClient.post(HttpParameter.goodUrl,"queryCoInfo", params, new TextHttpResponseHandler(){
 

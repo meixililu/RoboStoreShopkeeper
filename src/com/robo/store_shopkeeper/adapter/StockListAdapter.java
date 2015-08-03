@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,11 +13,10 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.robo.store_shopkeeper.GoodsDetailActivity;
 import com.robo.store_shopkeeper.R;
+import com.robo.store_shopkeeper.StockDetaillActivity;
 import com.robo.store_shopkeeper.dao.GetShopStorageListVo;
 import com.robo.store_shopkeeper.util.KeyUtil;
-import com.robo.store_shopkeeper.util.TimeUtil;
 
 public class StockListAdapter extends BaseAdapter {
 
@@ -73,16 +73,19 @@ public class StockListAdapter extends BaseAdapter {
 		holder.stock_cover.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				toGoodsDetailActivity(mGoodsBase.getGoodsBarcode());
+				toDetailActivity(mGoodsBase.getGoodsBarcode(), mGoodsBase.getMachineId());
 			}
 		});
 		
 		return convertView;
 	}
 	
-	private void toGoodsDetailActivity(String id){
-		Intent intent = new Intent(context, GoodsDetailActivity.class);
-		intent.putExtra(KeyUtil.GoodsIdKey, id);
+	private void toDetailActivity(String id, String macid){
+		Bundle bundle = new Bundle();
+		bundle.putString(KeyUtil.InStorageIdKey, id);
+		bundle.putString(KeyUtil.MachineIdKey, macid);
+		Intent intent = new Intent(context, StockDetaillActivity.class);
+		intent.putExtra(KeyUtil.BundleKey, bundle);
 		context.startActivity(intent);
 	}
 	

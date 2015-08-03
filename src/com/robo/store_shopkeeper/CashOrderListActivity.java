@@ -123,6 +123,7 @@ public class CashOrderListActivity extends BaseActivity implements OnClickListen
 				
 				@Override
 				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
+					showEmptyLayout_Error();
 					ToastUtil.diaplayMesLong(CashOrderListActivity.this, CashOrderListActivity.this.getResources().getString(R.string.connet_fail));
 				}
 				

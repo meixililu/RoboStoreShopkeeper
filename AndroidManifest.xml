@@ -45,7 +45,7 @@
         </activity>
 
         <meta-data android:value='100001' android:name='ROBOCHANNEL'/>
-        <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="Q9tAiPVE2vt3b9GPka34KXM0" />
+        <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="VHCi3jVyzE50PN0jyWaQFhpI" />
         
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"></service>
 
@@ -61,6 +61,21 @@
                 android:resource="@xml/authenticator" />
         </service>
         
+        <activity
+            android:name=".PerMonthIncomeDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MachineOrderDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".StockDetaillActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ReportDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RukuDetailActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".BusinessRemindDetailActivity"
             android:screenOrientation="portrait" />

@@ -37,7 +37,6 @@ public class PerMonthIncomeActivity extends BaseActivity implements OnClickListe
 	private View footerView;
 	private LinearLayout load_more_data;
 	private TextView no_more_data;
-	private String checkOutStatus = "9";
 	public int pageIndex = 0;
 	private boolean isLoadMoreData;
 	private boolean isFinishloadData = true;

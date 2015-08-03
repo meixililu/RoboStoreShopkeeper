@@ -115,6 +115,7 @@ public class RukuHistoryActivity extends BaseActivity implements OnClickListener
 				
 				@Override
 				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
+					showEmptyLayout_Error();
 					ToastUtil.diaplayMesLong(RukuHistoryActivity.this, RukuHistoryActivity.this.getResources().getString(R.string.connet_fail));
 				}
 				

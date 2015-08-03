@@ -115,6 +115,7 @@ public class ReportHistoryListActivity extends BaseActivity implements OnClickLi
 				
 				@Override
 				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
+					showEmptyLayout_Error();
 					ToastUtil.diaplayMesLong(ReportHistoryListActivity.this, ReportHistoryListActivity.this.getResources().getString(R.string.connet_fail));
 				}
 				

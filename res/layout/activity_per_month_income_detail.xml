@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/my_awesome_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_bar"
+        android:background="@drawable/top_bg"
+        android:paddingLeft="0dp" >
+
+        <FrameLayout
+            android:id="@+id/back_cover"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:foreground="@drawable/framelayout_selector"
+            android:paddingLeft="@dimen/padding_20"
+            android:paddingRight="@dimen/padding_20" >
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="21dp"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_back" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="分成详情"
+            android:textColor="@color/white"
+            android:textSize="@dimen/bigger" />
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:fillViewport="true" >
+
+            <LinearLayout
+                android:id="@+id/content_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:background="@color/app_color"
+                    android:weightSum="2" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/padding_7"
+                        android:paddingTop="@dimen/padding_7"
+                        android:text="项目"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/big" />
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@color/app_color" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="金额/元"
+                        android:paddingBottom="@dimen/padding_7"
+                        android:paddingTop="@dimen/padding_7"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/big" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/text_tint" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="2" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingRight="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingTop="@dimen/padding_10"
+                        android:text="货道租金分成"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/big" />
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@color/text_tint" />
+
+                    <TextView
+                        android:id="@+id/huodao_fencheng"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingLeft="@dimen/padding_10"
+                        android:paddingTop="@dimen/padding_10"
+                        android:textColor="@color/app_color"
+                        android:textSize="@dimen/big" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/text_tint" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="2" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingRight="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingTop="@dimen/padding_10"
+                        android:text="广告分成"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/big" />
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@color/text_tint" />
+
+                    <TextView
+                        android:id="@+id/ad_fencheng"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingLeft="@dimen/padding_10"
+                        android:paddingTop="@dimen/padding_10"
+                        android:textColor="@color/app_color"
+                        android:textSize="@dimen/big" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/text_tint" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="2" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingRight="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingTop="@dimen/padding_10"
+                        android:text="店铺内场地租金分成"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/big" />
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@color/text_tint" />
+
+                    <TextView
+                        android:id="@+id/changdi_fencheng"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingLeft="@dimen/padding_10"
+                        android:paddingTop="@dimen/padding_10"
+                        android:textColor="@color/app_color"
+                        android:textSize="@dimen/big" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/text_tint" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="2" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingRight="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingTop="@dimen/padding_10"
+                        android:text="自营商品利润分成"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/big" />
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@color/text_tint" />
+
+                    <TextView
+                        android:id="@+id/goods_fencheng"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingLeft="@dimen/padding_10"
+                        android:paddingTop="@dimen/padding_10"
+                        android:textColor="@color/app_color"
+                        android:textSize="@dimen/big" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/text_tint" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:background="@color/app_color"
+                    android:weightSum="2" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingRight="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingTop="@dimen/padding_10"
+                        android:text="合计"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/big" />
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@color/app_color" />
+					
+                    <TextView
+                        android:id="@+id/sum_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingLeft="@dimen/padding_10"
+                        android:paddingTop="@dimen/padding_10"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/big" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
+            android:id="@+id/progressBarCircularIndetermininate"
+            android:layout_width="@dimen/progressbar_width"
+            android:layout_height="@dimen/progressbar_heigh"
+            android:layout_gravity="center"
+            android:background="@color/app_color"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/empty_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="暂无数据，轻触屏幕可刷新"
+            android:textColor="@color/text_grey"
+            android:textSize="@dimen/bigger"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</LinearLayout>

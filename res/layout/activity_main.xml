@@ -34,7 +34,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="服务运营商名字"
+            android:text="萝卜店主"
             android:textColor="@color/white"
             android:textSize="@dimen/bigger" />
 
