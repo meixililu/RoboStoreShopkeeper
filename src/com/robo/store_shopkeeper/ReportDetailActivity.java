@@ -112,7 +112,9 @@ public class ReportDetailActivity extends BaseActivity implements OnClickListene
 		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.modify_btn:
-			
+			Bundle bundle = new Bundle();
+			bundle.putSerializable(KeyUtil.BeanKey, mResponse);
+			toActivity(GoodsRukuActivity.class, bundle);
 			break;
 		}
 	}

@@ -63,8 +63,11 @@ public class KeyUtil {
 	
 	public static final String MonthKey = "MonthKey";
 	
+	public static final String SettleIdKey = "SettleIdKey";
 	
+	public static final String UndoIdKey = "UndoIdKey";
 	
+	public static final String BeanKey = "BeanKey";
 	
 	
 	

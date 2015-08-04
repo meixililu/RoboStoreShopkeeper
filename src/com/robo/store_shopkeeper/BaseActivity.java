@@ -185,6 +185,14 @@ public class BaseActivity extends ActionBarActivity implements View.OnClickListe
 		}
 		startActivity(intent);
 	}
+	
+	protected void toActivityForResult(Class mClass,Bundle bundle,int requestCode){
+		Intent intent = new Intent(this,mClass);
+		if(bundle != null){
+			intent.putExtra(KeyUtil.BundleKey, bundle);
+		}
+		startActivityForResult(intent, requestCode);
+	}
 
 	@Override
 	public void onClick(View v) {

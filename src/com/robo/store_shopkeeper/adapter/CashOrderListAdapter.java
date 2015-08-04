@@ -4,18 +4,16 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.robo.store_shopkeeper.GoodsDetailActivity;
+import com.robo.store_shopkeeper.CashOrderDetailActivity;
 import com.robo.store_shopkeeper.R;
 import com.robo.store_shopkeeper.dao.GetCashOrderListVo;
 import com.robo.store_shopkeeper.util.KeyUtil;
@@ -76,16 +74,18 @@ public class CashOrderListAdapter extends BaseAdapter {
 		holder.check_or_pay_btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				toGoodsDetailActivity(mGoodsBase.getGoodsBarcode());
+				toDetailActivity(mGoodsBase.getSettleId());
 			}
 		});
 		
 		return convertView;
 	}
 	
-	private void toGoodsDetailActivity(String id){
-		Intent intent = new Intent(context, GoodsDetailActivity.class);
-		intent.putExtra(KeyUtil.GoodsIdKey, id);
+	private void toDetailActivity(String id){
+		Bundle bundle = new Bundle();
+		bundle.putString(KeyUtil.SettleIdKey, id);
+		Intent intent = new Intent(context, CashOrderDetailActivity.class);
+		intent.putExtra(KeyUtil.BundleKey, bundle);
 		context.startActivity(intent);
 	}
 	

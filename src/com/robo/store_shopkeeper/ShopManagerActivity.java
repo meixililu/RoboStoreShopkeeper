@@ -5,7 +5,9 @@ import java.util.HashMap;
 import org.apache.http.Header;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -13,16 +15,19 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.robo.store_shopkeeper.dao.CommonResponse;
 import com.robo.store_shopkeeper.dao.GetShopInfoResponse;
 import com.robo.store_shopkeeper.http.HttpParameter;
 import com.robo.store_shopkeeper.http.RoboHttpClient;
 import com.robo.store_shopkeeper.http.TextHttpResponseHandler;
+import com.robo.store_shopkeeper.util.KeyUtil;
 import com.robo.store_shopkeeper.util.LogUtil;
 import com.robo.store_shopkeeper.util.ResultParse;
 import com.robo.store_shopkeeper.util.ToastUtil;
 
 public class ShopManagerActivity extends BaseActivity implements View.OnClickListener {
 
+	public static final int requestCode = 10005;
 	private ScrollView content_layout;
 	private ImageView shop_edit_img;
 	private ImageView shop_address_edit_img;
@@ -42,6 +47,7 @@ public class ShopManagerActivity extends BaseActivity implements View.OnClickLis
 	private TextView open_time_tv;
 	
 	private GetShopInfoResponse mGetShopInfoResponse;
+	private String shop_des,shop_position,name,cellphone,contat,contat_cellphone;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -121,14 +127,49 @@ public class ShopManagerActivity extends BaseActivity implements View.OnClickLis
 	}
 	
 	private boolean validSubmitData(){
-		
-		
-		return true;
+		boolean isvalid = true;
+		shop_des = input_shop_des.getText().toString().trim();
+		if(TextUtils.isEmpty(shop_des)){
+			ToastUtil.diaplayMesShort(this, "店铺介绍不能为空");
+			isvalid = false;
+		}
+		shop_position = input_shop_position.getText().toString().trim();
+		if(TextUtils.isEmpty(shop_position)){
+			ToastUtil.diaplayMesShort(this, "店铺地址不能为空");
+			isvalid = false;
+		}
+		name = user_name.getText().toString().trim();
+		if(TextUtils.isEmpty(name)){
+			ToastUtil.diaplayMesShort(this, "联系人不能为空");
+			isvalid = false;
+		}
+		cellphone = user_cellphone.getText().toString().trim();
+		if(TextUtils.isEmpty(cellphone)){
+			ToastUtil.diaplayMesShort(this, "联系电话不能为空");
+			isvalid = false;
+		}
+		contat = emergency_contat.getText().toString().trim();
+		if(TextUtils.isEmpty(contat)){
+			ToastUtil.diaplayMesShort(this, "紧急联系人不能为空");
+			isvalid = false;
+		}
+		contat_cellphone = emergency_contat_cellphone.getText().toString().trim();
+		if(TextUtils.isEmpty(contat_cellphone)){
+			ToastUtil.diaplayMesShort(this, "紧急联系电话不能为空");
+			isvalid = false;
+		}
+		return isvalid;
 	}
 	
 	private void RequestDataModify(){
 		if(validSubmitData()){
 			showProgressbar();
+			mGetShopInfoResponse.setMemo(shop_des);
+			mGetShopInfoResponse.setAddress(shop_position);
+			mGetShopInfoResponse.setSosMan(contat);
+			mGetShopInfoResponse.setSosTel(contat_cellphone);
+			mGetShopInfoResponse.setLinkMan(name);
+			mGetShopInfoResponse.setLinkMobile(cellphone);
 			HashMap<String, String> params = new HashMap<String, String>();
 			params.put("shopId", mGetShopInfoResponse.getShopId());
 			params.put("memo", mGetShopInfoResponse.getMemo());
@@ -139,17 +180,19 @@ public class ShopManagerActivity extends BaseActivity implements View.OnClickLis
 			params.put("linkMobile", mGetShopInfoResponse.getLinkMobile());
 			params.put("latitude", mGetShopInfoResponse.getLatitude());
 			params.put("longitude", mGetShopInfoResponse.getLongitude());
+//			params.put("latitude", "39.9055");
+//			params.put("longitude","116.421579");
 			RoboHttpClient.post(HttpParameter.shopsUrl,"updateShopInfo", params, new TextHttpResponseHandler(){
 				@Override
 				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
-					ToastUtil.diaplayMesLong(ShopManagerActivity.this, "连接失败，请重试！");
+//					ToastUtil.diaplayMesShort(ShopManagerActivity.this, "连接失败，请重试！");
 				}
 				@Override
 				public void onSuccess(int arg0, Header[] arg1, String result) {
 					LogUtil.DefalutLog(result);
-					mGetShopInfoResponse = (GetShopInfoResponse) ResultParse.parseResult(result,GetShopInfoResponse.class);
-					if(ResultParse.handleResutl(ShopManagerActivity.this, mGetShopInfoResponse)){
-						setData();
+					CommonResponse mResponse = (CommonResponse) ResultParse.parseResult(result,CommonResponse.class);
+					if(ResultParse.handleResutl(ShopManagerActivity.this, mResponse)){
+//						ToastUtil.diaplayMesShort(ShopManagerActivity.this, "修改成功");
 					}
 				}
 				@Override
@@ -175,6 +218,8 @@ public class ShopManagerActivity extends BaseActivity implements View.OnClickLis
 				input_shop_des.requestFocus();
 				input_shop_des.setSelection(input_shop_des.getText().toString().length());
 				showIME(input_shop_des);
+			}else{
+				RequestDataModify();
 			}
 			break;
 		case R.id.shop_address_edit_img:
@@ -183,6 +228,8 @@ public class ShopManagerActivity extends BaseActivity implements View.OnClickLis
 				input_shop_position.requestFocus();
 				input_shop_position.setSelection(input_shop_position.getText().toString().length());
 				showIME(input_shop_position);
+			}else{
+				RequestDataModify();
 			}
 			break;
 		case R.id.contact_edit_img:
@@ -194,9 +241,38 @@ public class ShopManagerActivity extends BaseActivity implements View.OnClickLis
 				user_name.requestFocus();
 				user_name.setSelection(user_name.getText().toString().length());
 				showIME(user_name);
+			}else{
+				RequestDataModify();
 			}
 			break;
+		case R.id.shop_location_img:
+			toShopLocation();
+			break;
 		}
+	}
+	
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		super.onActivityResult(arg0, arg1, arg2);
+		if(requestCode == arg0 && RESULT_OK == arg1){
+			if(arg2 != null){
+				String lat = arg2.getStringExtra(KeyUtil.LatitudeKey);
+				String lon = arg2.getStringExtra(KeyUtil.LongitudeKey);
+				if(!TextUtils.isEmpty(lat) && !TextUtils.isEmpty(lon)){
+					LogUtil.DefalutLog("onActivityResult---requestCode:"+requestCode);
+					mGetShopInfoResponse.setLatitude(lat);
+					mGetShopInfoResponse.setLongitude(lon);
+					RequestDataModify();
+				}
+			}
+		}
+	}
+	
+	private void toShopLocation(){
+		Bundle bundle = new Bundle();
+		bundle.putString(KeyUtil.LatitudeKey, mGetShopInfoResponse.getLatitude());
+		bundle.putString(KeyUtil.LongitudeKey, mGetShopInfoResponse.getLongitude());
+		toActivityForResult(ShopLocationActivity.class, bundle, requestCode);
 	}
 	
 	private void showIME(View view){

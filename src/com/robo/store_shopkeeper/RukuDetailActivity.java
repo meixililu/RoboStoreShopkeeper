@@ -109,7 +109,9 @@ public class RukuDetailActivity extends BaseActivity implements OnClickListener{
 		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.modify_btn:
-			
+			Bundle bundle = new Bundle();
+			bundle.putSerializable(KeyUtil.BeanKey, mResponse);
+			toActivity(GoodsRukuActivity.class, bundle);
 			break;
 		}
 	}

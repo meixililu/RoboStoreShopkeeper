@@ -1,7 +1,13 @@
 package com.robo.store_shopkeeper.dao;
 
+import java.io.Serializable;
 
-public class GetInStrogeInfoResponse extends CommonResponse {
+
+public class GetInStrogeInfoResponse extends CommonResponse implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String instorageId;
 	private String datetime; // yyyy-MM-dd HH:mm:ss
 	private String goodsBarcode;

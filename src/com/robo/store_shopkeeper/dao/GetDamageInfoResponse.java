@@ -1,6 +1,12 @@
 package com.robo.store_shopkeeper.dao;
 
-public class GetDamageInfoResponse extends CommonResponse {
+import java.io.Serializable;
+
+public class GetDamageInfoResponse extends CommonResponse implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String damageId;
 	private String datetime; // yyyy-MM-dd HH:mm:ss
 	private String goodsBarcode;

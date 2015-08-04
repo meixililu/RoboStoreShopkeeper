@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.robo.store_shopkeeper.dao.CommonResponse;
+import com.robo.store_shopkeeper.dao.GetInStrogeInfoResponse;
 import com.robo.store_shopkeeper.dao.QueryCoInfoResponse;
 import com.robo.store_shopkeeper.dao.QueryCoInfoVo;
 import com.robo.store_shopkeeper.dao.QueryGoodsInfoResponse;
@@ -26,6 +27,7 @@ import com.robo.store_shopkeeper.dialog.FuWuShangDialog.onFuWuShangDialogListene
 import com.robo.store_shopkeeper.http.HttpParameter;
 import com.robo.store_shopkeeper.http.RoboHttpClient;
 import com.robo.store_shopkeeper.http.TextHttpResponseHandler;
+import com.robo.store_shopkeeper.util.KeyUtil;
 import com.robo.store_shopkeeper.util.LogUtil;
 import com.robo.store_shopkeeper.util.NumberUtil;
 import com.robo.store_shopkeeper.util.ResultParse;
@@ -81,6 +83,22 @@ public class GoodsRukuActivity extends BaseActivity {
 				}
 			}
 		});
+		setEditData();
+	}
+	
+	private void setEditData(){
+		Bundle bundle = getIntent().getBundleExtra(KeyUtil.BundleKey);
+		if(bundle != null){
+			GetInStrogeInfoResponse mbean =  (GetInStrogeInfoResponse) bundle.getSerializable(KeyUtil.BeanKey);
+			if(mbean != null){
+				goods_code_input.setText(mbean.getGoodsBarcode());
+				goods_info_input.setText(mbean.getGoodsName());
+				number_input.setText(mbean.getCount()+"");
+				delivery_number_input.setText(mbean.getDeliveryId());
+				service_keyword_input.setText(mbean.getCoName());
+				coId = mbean.getCoId();
+			}
+		}
 	}
 	
 	private void RequestGoodInfoData(){
@@ -189,7 +207,7 @@ public class GoodsRukuActivity extends BaseActivity {
 			HashMap<String, String> params = new HashMap<String, String>();
 			params.put("goodsBarcode", goodsBarcode);
 			params.put("coName", UnicodeToStr.toUnicode(coName));
-			RoboHttpClient.post(HttpParameter.goodUrl,"queryCoInfo", params, new TextHttpResponseHandler(){
+			RoboHttpClient.get(HttpParameter.goodUrl,"queryCoInfo", params, new TextHttpResponseHandler(){
 
 				@Override
 				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
