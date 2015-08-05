@@ -56,7 +56,7 @@ public class DailyOrdersActivity extends BaseActivity implements OnClickListener
 		Bundle bundle = getIntent().getBundleExtra(KeyUtil.BundleKey);
 		datetime = bundle.getString(KeyUtil.DateTimeKey);
 		flag = bundle.getString(KeyUtil.OnlineOffLineKey);
-		setTitle(datetime+"售货机交易订单");
+		setTitle(datetime+"交易订单");
 	}
 	
 	private void init(){

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/text_tint1"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/my_awesome_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_bar"
+        android:background="@drawable/top_bg"
+        android:paddingLeft="0dp" >
+
+        <FrameLayout
+            android:id="@+id/back_cover"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:foreground="@drawable/framelayout_selector"
+            android:paddingLeft="@dimen/padding_20"
+            android:paddingRight="@dimen/padding_20" >
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="21dp"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_back" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="条码扫描"
+            android:textColor="@color/white"
+            android:textSize="@dimen/bigger" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <SurfaceView
+            android:id="@+id/preview_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center" />
+
+        <com.robo.store_shopkeeper.zxing.ViewfinderView
+            android:id="@+id/viewfinder_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+</LinearLayout>

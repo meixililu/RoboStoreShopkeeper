@@ -3,6 +3,7 @@ package com.robo.store_shopkeeper.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,7 @@ public class CashOrderDetailListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder;
 		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.cash_order_list_item, null);
+			convertView = mInflater.inflate(R.layout.cash_order_detail_list_item, null);
 			holder = new ViewHolder();
 			holder.machine_goods_info_layout = (LinearLayout) convertView.findViewById(R.id.machine_goods_info_layout);
 			holder.date_time = (TextView) convertView.findViewById(R.id.date_time);
@@ -56,10 +57,20 @@ public class CashOrderDetailListAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		final GetCashOrderInfoVo mGoodsBase = ordersList.get(position);
-		holder.date_time.setText(mGoodsBase.getTime());
-		holder.machine_goods_info.setText(mGoodsBase.getMachineId() + " 出售 " + mGoodsBase.getGoodsInfo());
-		holder.tv_sum.setText("收入：￥" + mGoodsBase.getAmount());
+		try {
+			final GetCashOrderInfoVo mGoodsBase = ordersList.get(position);
+			if(!TextUtils.isEmpty(mGoodsBase.getTime())){
+				holder.date_time.setText(mGoodsBase.getTime());
+			}
+			if(!TextUtils.isEmpty(mGoodsBase.getMachineId())){
+				holder.machine_goods_info.setText(mGoodsBase.getMachineId() + " 出售 " + mGoodsBase.getGoodsInfo());
+			}else{
+				holder.machine_goods_info.setText("售货机" + " 出售 " + mGoodsBase.getGoodsInfo());
+			}
+			holder.tv_sum.setText("收入：￥" + mGoodsBase.getAmount());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return convertView;
 	}

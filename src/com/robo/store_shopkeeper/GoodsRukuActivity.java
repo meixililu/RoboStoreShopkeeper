@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.http.Header;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -36,6 +38,7 @@ import com.robo.store_shopkeeper.util.UnicodeToStr;
 
 public class GoodsRukuActivity extends BaseActivity {
 
+	private final static int SCANNIN_GREQUEST_CODE = 1112;
 	private TextView history_btn,error_txt;
 	private EditText goods_code_input,goods_info_input,number_input,delivery_number_input,service_keyword_input;
 	private ImageButton scan_btn;
@@ -258,6 +261,7 @@ public class GoodsRukuActivity extends BaseActivity {
 			RequestGoodInfoData();
 			break;
 		case R.id.scan_btn:
+			scanQRcode();
 			break;
 		case R.id.search_btn:
 			RequestFuWuData();
@@ -267,6 +271,26 @@ public class GoodsRukuActivity extends BaseActivity {
 			break;
 		}
 	}
+	
+	private void scanQRcode(){
+		Intent intent = new Intent();
+		intent.setClass(this, MipcaActivityCapture.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivityForResult(intent, SCANNIN_GREQUEST_CODE);
+	}
+	
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+		case SCANNIN_GREQUEST_CODE:
+			if(resultCode == RESULT_OK){
+				Bundle bundle = data.getExtras();
+				goods_code_input.setText(bundle.getString("result"));
+			}
+			break;
+		}
+    }	
 	
 	@Override
 	protected void onDestroy() {

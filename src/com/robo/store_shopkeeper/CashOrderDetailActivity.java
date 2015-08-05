@@ -87,9 +87,9 @@ public class CashOrderDetailActivity extends BaseActivity implements OnClickList
 			public void onSuccess(int arg0, Header[] arg1, String result) {
 				GetCashOrderInfoResponse mResponse = (GetCashOrderInfoResponse) ResultParse.parseResult(result,GetCashOrderInfoResponse.class);
 				if(ResultParse.handleResutl(CashOrderDetailActivity.this, mResponse)){
+					setData(mResponse);
 					list.addAll(mResponse.getList());
 					mCashOrderListAdapter.notifyDataSetChanged();
-					setData(mResponse);
 					content_layout.setVisibility(View.VISIBLE);
 				}else{
 					showEmptyLayout_Empty();
