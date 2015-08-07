@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.robo.store_shopkeeper.dao.CommonResponse;
+import com.robo.store_shopkeeper.dao.GetDamageInfoResponse;
 import com.robo.store_shopkeeper.dao.QueryCoInfoResponse;
 import com.robo.store_shopkeeper.dao.QueryCoInfoVo;
 import com.robo.store_shopkeeper.dao.QueryGoodsInfoResponse;
@@ -27,6 +28,7 @@ import com.robo.store_shopkeeper.dialog.FuWuShangDialog.onFuWuShangDialogListene
 import com.robo.store_shopkeeper.http.HttpParameter;
 import com.robo.store_shopkeeper.http.RoboHttpClient;
 import com.robo.store_shopkeeper.http.TextHttpResponseHandler;
+import com.robo.store_shopkeeper.util.KeyUtil;
 import com.robo.store_shopkeeper.util.LogUtil;
 import com.robo.store_shopkeeper.util.NumberUtil;
 import com.robo.store_shopkeeper.util.ResultParse;
@@ -84,6 +86,23 @@ public class GoodsReportOrReturnActivity extends BaseActivity {
 				}
 			}
 		});
+		setEditData();
+	}
+	
+	private void setEditData(){
+		Bundle bundle = getIntent().getBundleExtra(KeyUtil.BundleKey);
+		if(bundle != null){
+			GetDamageInfoResponse mbean =  (GetDamageInfoResponse) bundle.getSerializable(KeyUtil.BeanKey);
+			if(mbean != null){
+				goods_code_input.setText(mbean.getGoodsBarcode());
+				goods_info_input.setText(mbean.getGoodsName());
+				number_input.setText(mbean.getCount()+"");
+				delivery_number_input.setText(mbean.getDeliveryId());
+				service_keyword_input.setText(mbean.getCoName());
+				damage_memo.setText(mbean.getDamageMemo());
+				coId = mbean.getCoId();
+			}
+		}
 	}
 	
 	private void RequestGoodInfoData(){
@@ -184,6 +203,11 @@ public class GoodsReportOrReturnActivity extends BaseActivity {
 			ToastUtil.diaplayMesShort(this, "请输入服务提供商");
 			isvalid = false;
 		}
+		goodsBarcode = goods_code_input.getText().toString().trim();
+		if(TextUtils.isEmpty(goodsBarcode)){
+			ToastUtil.diaplayMesShort(this, "请输入商品条码数字");
+			isvalid = false;
+		}
 		return isvalid;
 	}
 	
@@ -191,6 +215,7 @@ public class GoodsReportOrReturnActivity extends BaseActivity {
 		if(validFuFuData()){
 			final ProgressDialog progressDialog = ProgressDialog.show(this, "", "正在加载...", true, false);
 			HashMap<String, String> params = new HashMap<String, String>();
+			params.put("goodsBarcode", goodsBarcode);
 			params.put("coName", UnicodeToStr.toUnicode(coName));
 			RoboHttpClient.post(HttpParameter.goodUrl,"queryCoInfo", params, new TextHttpResponseHandler(){
 

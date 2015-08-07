@@ -47,6 +47,7 @@
             android:layout_marginRight="@dimen/padding_10"
             android:background="@drawable/bg_menu_btn"
             android:gravity="center"
+            android:visibility="gone"
             android:text="修改"
             android:textColor="@drawable/text_white_to_gray_selector"
             android:textSize="@dimen/middle" />

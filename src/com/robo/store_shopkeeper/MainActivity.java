@@ -9,12 +9,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.gc.materialdesign.widgets.Dialog;
 import com.robo.store_shopkeeper.http.HttpParameter;
 import com.robo.store_shopkeeper.http.RoboHttpClient;
 import com.robo.store_shopkeeper.http.TextHttpResponseHandler;
+import com.robo.store_shopkeeper.util.HttpUtil;
 import com.robo.store_shopkeeper.util.KeyUtil;
 import com.robo.store_shopkeeper.util.LogUtil;
 import com.robo.store_shopkeeper.util.LoginUtil;
@@ -37,6 +40,26 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 		init();
 //		RequestData();
 		LoginUtil.login(this, mSharedPreferences);
+		checkNetwork();
+	}
+	
+	private void checkNetwork(){
+		if(!HttpUtil.checkNetwork(this)){
+			networdError();
+		}
+	}
+	
+	private void networdError(){
+		Dialog dialog = new Dialog(this, "温馨提示", "当前没有可用的网络连接,请打开网络连接！");
+		dialog.addAcceptButton("确定");
+		dialog.setOnAcceptButtonClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				checkNetwork();
+			}
+		});
+		dialog.setCancelable(true);
+		dialog.show();
 	}
 	
 	private void init(){

@@ -34,9 +34,9 @@ public class ServiceChargeActivity extends BaseActivity implements OnClickListen
 	private ServiceChargeListAdapter mRukuHistoryListAdapter;
 	private List<GetServicePriceVo> list;
 	
-	private View footerView;
-	private LinearLayout load_more_data;
-	private TextView no_more_data;
+//	private View footerView;
+//	private LinearLayout load_more_data;
+//	private TextView no_more_data;
 	public int pageIndex = 0;
 	private boolean isLoadMoreData;
 	private boolean isFinishloadData = true;
@@ -56,13 +56,13 @@ public class ServiceChargeActivity extends BaseActivity implements OnClickListen
 		initSwipeRefresh();
 		mListView = (ListView) findViewById(R.id.content_lv);
 		
-		footerView = inflater.inflate(R.layout.list_footer_view, null);
-		load_more_data = (LinearLayout) footerView.findViewById(R.id.load_more_data);
-		no_more_data = (TextView) footerView.findViewById(R.id.no_more_data);
-		footerView.setVisibility(View.GONE);
+//		footerView = inflater.inflate(R.layout.list_footer_view, null);
+//		load_more_data = (LinearLayout) footerView.findViewById(R.id.load_more_data);
+//		no_more_data = (TextView) footerView.findViewById(R.id.no_more_data);
+//		footerView.setVisibility(View.GONE);
 //		mListView.addFooterView(footerView);
 		
-		setListOnScrollListener();
+//		setListOnScrollListener();
 		mListView.setAdapter(mRukuHistoryListAdapter);
 		
 	}
@@ -94,10 +94,10 @@ public class ServiceChargeActivity extends BaseActivity implements OnClickListen
 	public void clearList(){
 		pageIndex = 0;
 		list.clear();
-		footerView.setVisibility(View.GONE);
+//		footerView.setVisibility(View.GONE);
 		mRukuHistoryListAdapter.notifyDataSetChanged();
-		load_more_data.setVisibility(View.VISIBLE);
-		no_more_data.setVisibility(View.GONE);
+//		load_more_data.setVisibility(View.VISIBLE);
+//		no_more_data.setVisibility(View.GONE);
 	}
 	
 	private void RequestData(){
@@ -122,23 +122,23 @@ public class ServiceChargeActivity extends BaseActivity implements OnClickListen
 					if(ResultParse.handleResutl(ServiceChargeActivity.this, mResponse)){
 						list.addAll(mResponse.getList());
 						if(list.size() > 0){
-							if(list.size() < Settings.pageCount && pageIndex == 0){
-								isLoadMoreData = false;
-								mListView.removeFooterView(footerView);
-							}else{
-								isLoadMoreData = true;
-								footerView.setVisibility(View.VISIBLE);
-//								pageIndex++;
-							}
+//							if(list.size() < Settings.pageCount && pageIndex == 0){
+//								isLoadMoreData = false;
+//								mListView.removeFooterView(footerView);
+//							}else{
+//								isLoadMoreData = true;
+//								footerView.setVisibility(View.VISIBLE);
+////								pageIndex++;
+//							}
 						}else{
 							showEmptyLayout_Empty();
-							isLoadMoreData = false;
-							load_more_data.setVisibility(View.GONE);
-							no_more_data.setVisibility(View.VISIBLE);
+//							isLoadMoreData = false;
+//							load_more_data.setVisibility(View.GONE);
+//							no_more_data.setVisibility(View.VISIBLE);
 						}
 						mRukuHistoryListAdapter.notifyDataSetChanged();
 					}else{
-						mListView.removeFooterView(footerView);
+//						mListView.removeFooterView(footerView);
 					}
 				}
 				

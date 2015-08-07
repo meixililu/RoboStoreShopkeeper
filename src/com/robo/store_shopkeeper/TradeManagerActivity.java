@@ -43,7 +43,7 @@ public class TradeManagerActivity extends BaseActivity implements View.OnClickLi
 			toActivity(SellMachineTradeOrdersActivity.class, bundle1);
 			break;
 		case R.id.shop_sell_sum_cover:
-			toActivity(GoodsRukuActivity.class, null);
+//			toActivity(GoodsRukuActivity.class, null);
 			break;
 		}
 	}

@@ -45,12 +45,14 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
+            android:paddingLeft="@dimen/padding_5"
+            android:paddingRight="@dimen/padding_5"
             android:layout_marginRight="@dimen/padding_10"
             android:background="@drawable/bg_menu_btn"
             android:gravity="center"
             android:text="全部"
             android:textColor="@drawable/text_white_to_gray_selector"
-            android:textSize="@dimen/middle" />
+            android:textSize="@dimen/small" />
     </RelativeLayout>
 
     <FrameLayout

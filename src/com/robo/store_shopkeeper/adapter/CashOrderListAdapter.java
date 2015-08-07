@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.robo.store_shopkeeper.CashOrderDetailActivity;
@@ -52,6 +53,7 @@ public class CashOrderListAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.cash_order_list_item, null);
 			holder = new ViewHolder();
+			holder.item_cover = (FrameLayout) convertView.findViewById(R.id.item_cover);
 			holder.date_day = (TextView) convertView.findViewById(R.id.date_day);
 			holder.date_month = (TextView) convertView.findViewById(R.id.date_month);
 			holder.tv_sum = (TextView) convertView.findViewById(R.id.tv_sum);
@@ -65,12 +67,20 @@ public class CashOrderListAdapter extends BaseAdapter {
 		holder.date_month.setText(TimeUtil.customFormatDate(mGoodsBase.getDate(),TimeUtil.DayFormat,"M")+"月");
 		holder.tv_sum.setText("￥" + mGoodsBase.getAmount());
 		
-		// 0：未结算1：已结算
+//		// 0：未结算1：已结算
 		if(mGoodsBase.getCheckOutStatus() == 0){
+			holder.check_or_pay_btn.setText("未支付");
 			holder.check_or_pay_btn.setBackgroundResource(R.drawable.btn_login_selector);
 		}else{
+			holder.check_or_pay_btn.setText("已支付");
 			holder.check_or_pay_btn.setBackgroundResource(R.drawable.btn_identity_selector);
 		}
+		holder.item_cover.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				toDetailActivity(mGoodsBase.getSettleId());
+			}
+		});
 		holder.check_or_pay_btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -90,6 +100,7 @@ public class CashOrderListAdapter extends BaseAdapter {
 	}
 	
 	static class ViewHolder {
+		FrameLayout item_cover;
 		TextView date_day;
 		TextView date_month;
 		TextView tv_sum;

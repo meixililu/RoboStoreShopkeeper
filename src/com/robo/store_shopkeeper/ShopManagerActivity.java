@@ -180,8 +180,6 @@ public class ShopManagerActivity extends BaseActivity implements View.OnClickLis
 			params.put("linkMobile", mGetShopInfoResponse.getLinkMobile());
 			params.put("latitude", mGetShopInfoResponse.getLatitude());
 			params.put("longitude", mGetShopInfoResponse.getLongitude());
-//			params.put("latitude", "39.9055");
-//			params.put("longitude","116.421579");
 			RoboHttpClient.post(HttpParameter.shopsUrl,"updateShopInfo", params, new TextHttpResponseHandler(){
 				@Override
 				public void onFailure(int arg0, Header[] arg1, String arg2, Throwable arg3) {
