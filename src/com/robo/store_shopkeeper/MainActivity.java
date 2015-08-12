@@ -17,6 +17,7 @@ import com.gc.materialdesign.widgets.Dialog;
 import com.robo.store_shopkeeper.http.HttpParameter;
 import com.robo.store_shopkeeper.http.RoboHttpClient;
 import com.robo.store_shopkeeper.http.TextHttpResponseHandler;
+import com.robo.store_shopkeeper.util.APKDownloadUtil;
 import com.robo.store_shopkeeper.util.HttpUtil;
 import com.robo.store_shopkeeper.util.KeyUtil;
 import com.robo.store_shopkeeper.util.LogUtil;
@@ -38,9 +39,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		init();
-//		RequestData();
 		LoginUtil.login(this, mSharedPreferences);
 		checkNetwork();
+		APKDownloadUtil.CheckUpdate(this);
 	}
 	
 	private void checkNetwork(){

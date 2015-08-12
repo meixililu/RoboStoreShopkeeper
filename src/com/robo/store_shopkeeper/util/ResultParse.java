@@ -41,7 +41,7 @@ public class ResultParse {
 	public static boolean handleResutl(Context mContext, CommonResponse mResultDao){
 		boolean data = false;
 		if(mResultDao != null){
-			if(mResultDao.getStatus().equals(ResultOk)){
+			if(mResultDao.getStatus().equals(ResultOk) || mResultDao.getStatus().equals("0")){
 				data = true;
 			}else if(mResultDao.getStatus().equals(TokenOut)){
 				SharedPreferences mSharedPreferences = SPUtil.getSharedPreferences(mContext);

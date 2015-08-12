@@ -88,9 +88,9 @@
                 android:orientation="vertical" >
 
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/icon_modify_pwd" />
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/icon_update" />
 
                 <TextView
                     android:layout_width="wrap_content"

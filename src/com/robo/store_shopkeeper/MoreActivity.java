@@ -1,5 +1,7 @@
 package com.robo.store_shopkeeper;
 
+import com.robo.store_shopkeeper.util.APKDownloadUtil;
+
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -51,6 +53,6 @@ public class MoreActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void checkSoftUpdate(){
-		
+		APKDownloadUtil.CheckUpdate(this);
 	}
 }
