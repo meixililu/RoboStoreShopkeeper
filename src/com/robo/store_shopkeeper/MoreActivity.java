@@ -53,6 +53,6 @@ public class MoreActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void checkSoftUpdate(){
-		APKDownloadUtil.CheckUpdate(this);
+		APKDownloadUtil.CheckUpdate(this,true);
 	}
 }
