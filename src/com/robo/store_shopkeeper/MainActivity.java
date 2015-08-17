@@ -41,7 +41,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 		init();
 		LoginUtil.login(this, mSharedPreferences);
 		checkNetwork();
-		APKDownloadUtil.CheckUpdate(this);
+		APKDownloadUtil.CheckUpdate(this,false);
 	}
 	
 	private void checkNetwork(){
