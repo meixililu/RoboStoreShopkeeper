@@ -10,15 +10,15 @@ import android.text.TextUtils;
 
 public class HttpParameter {
 
-	public static final String baseUrl = "http://123.57.8.253:8080/roboisp/base";
+public static final String baseUrl = "http://www.robochina.com.cn/roboisp/base";
 	
-	public static final String goodUrl = "http://123.57.8.253:8080/roboisp/goods";
+	public static final String goodUrl = "http://www.robochina.com.cn/roboisp/goods";
 	
-	public static final String orderUrl = "http://123.57.8.253:8080/roboisp/order";
+	public static final String orderUrl = "http://www.robochina.com.cn/roboisp/order";
 	
-	public static final String shopsUrl = "http://123.57.8.253:8080/roboisp/sys";
+	public static final String shopsUrl = "http://www.robochina.com.cn/roboisp/sys";
 	
-	public static final String shopsRoboUrl = "http://123.57.8.253:8080/robo/sys";
+	public static final String shopsRoboUrl = "http://www.robochina.com.cn/robo/sys";
 	//RequestHeader
 	public static String softVer;
 	

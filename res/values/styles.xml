@@ -6,19 +6,15 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@color/none</item><!--背景透明-->
     </style>
-    
     <!--
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppTheme" parent="AppTheme.Base"/>
  
-    <style name="AppTheme.Base" parent="Theme.AppCompat">
+    <style name="AppTheme.Base" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/load_blue</item>
         <item name="colorPrimaryDark">@color/load_blue</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowActionBarOverlay">true</item>
     </style>
         <!--
             Theme customizations available in newer API levels can go in
